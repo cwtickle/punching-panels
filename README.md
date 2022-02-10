@@ -59,3 +59,4 @@ If you would like to cooperate with the development, please see below. Even if y
 
 ## License / ライセンス
 This software is released under the MIT License, see LICENSE.  
+*Dancing Onigiri "CW Edition"* is released under the MIT License.
