@@ -1,0 +1,427 @@
+﻿@charset "UTF-8";
+/* ----------------------------------------
+  Punching◇Panels
+  カスタムcssファイル
+
+  Created : 2022/01/28
+  Revised : 
+
+  https://github.com/cwtickle/punching-panels
+------------------------------------------ */
+
+div[id^="stepHit"] {
+  top: -10px !important;
+}
+
+.j11, .j12, .j13, .j14, .j15, .j21, .j22, .j23, .j24, .j31, .j32, .j33, .j34, .j41, .j42, .j43, .j44, .j45 {
+  animation-timing-function: linear, step-end;
+  animation-fill-mode: forwards;
+}
+
+.j11, .j21, .j31, .j41 {
+  border: 2px solid #6666ff;
+  background: #000066;
+}
+
+.j12, .j22, .j32, .j42 {
+  border: 2px solid #66ffff;
+  background: #003333;
+}
+
+.j13, .j43 {
+  border: 2px solid #ffffff;
+  background: #333333;
+}
+
+.j14, .j23, .j33, .j44 {
+  border: 2px solid #ffff66;
+  background: #333300;
+}
+
+.j15, .j24, .j34, .j45 {
+  border: 2px solid #ff9966;
+  background: #663300;
+}
+
+.j11 {
+  animation-name: move11;
+  top: 50px;
+}
+
+@keyframes move11 {
+  0% {
+    left: 50px;
+    top: 110px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 100px;
+    top: 110px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j12 {
+  animation-name: move12;
+  top: 50px;
+  transform-origin: center;
+}
+
+@keyframes move12 {
+  0% {
+    left: 150px;
+    top: 110px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 200px;
+    top: 110px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+.j13 {
+  animation-name: move13;
+  top: 50px;
+}
+
+@keyframes move13 {
+  0% {
+    left: 300px;
+    top: 60px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 300px;
+    top: 110px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j14 {
+  animation-name: move14;
+  top: 50px;
+}
+
+@keyframes move14 {
+  0% {
+    left: 450px;
+    top: 110px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 400px;
+    top: 110px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j15 {
+  animation-name: move15;
+  top: 50px;
+}
+
+@keyframes move15 {
+  0% {
+    left: 550px;
+    top: 110px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 500px;
+    top: 110px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j21 {
+  animation-name: move21;
+  top: 150px;
+}
+
+@keyframes move21 {
+  0% {
+    left: 100px;
+    top: 170px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 150px;
+    top: 170px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j22 {
+  animation-name: move22;
+  top: 150px;
+}
+
+@keyframes move22 {
+  0% {
+    left: 200px;
+    top: 170px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 250px;
+    top: 170px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+.j23 {
+  animation-name: move23;
+  top: 150px;
+}
+
+@keyframes move23 {
+  0% {
+    left: 400px;
+    top: 170px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 350px;
+    top: 170px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j24 {
+  animation-name: move24;
+  top: 150px;
+}
+
+@keyframes move24 {
+  0% {
+    left: 500px;
+    top: 170px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 450px;
+    top: 170px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j31 {
+  animation-name: move31;
+  top: 250px;
+}
+
+@keyframes move31 {
+  0% {
+    left: 100px;
+    top: 230px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 150px;
+    top: 230px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j32 {
+  animation-name: move32;
+  top: 250px;
+}
+
+@keyframes move32 {
+  0% {
+    left: 200px;
+    top: 230px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 250px;
+    top: 230px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+.j33 {
+  animation-name: move33;
+  top: 250px;
+}
+
+@keyframes move33 {
+  0% {
+    left: 400px;
+    top: 230px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 350px;
+    top: 230px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j34 {
+  animation-name: move34;
+  top: 250px;
+}
+
+@keyframes move34 {
+  0% {
+    left: 500px;
+    top: 230px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 450px;
+    top: 230px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j41 {
+  animation-name: move41;
+  top: 350px;
+}
+
+@keyframes move41 {
+  0% {
+    left: 50px;
+    top: 290px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 100px;
+    top: 290px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j42 {
+  animation-name: move42;
+  top: 350px;
+}
+
+@keyframes move42 {
+  0% {
+    left: 150px;
+    top: 290px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 200px;
+    top: 290px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+.j43 {
+  animation-name: move43;
+  top: 350px;
+}
+
+@keyframes move43 {
+  0% {
+    left: 300px;
+    top: 340px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 300px;
+    top: 290px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j44 {
+  animation-name: move44;
+  top: 350px;
+}
+
+@keyframes move44 {
+  0% {
+    left: 450px;
+    top: 290px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 400px;
+    top: 290px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j45 {
+  animation-name: move45;
+  top: 350px;
+}
+
+@keyframes move45 {
+  0% {
+    left: 550px;
+    top: 290px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 500px;
+    top: 290px;
+    width: 50px;
+    height: 50px;
+  }
+}
