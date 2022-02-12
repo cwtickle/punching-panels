@@ -2,6 +2,9 @@
 
 [![CodeQL](https://github.com/cwtickle/punching-panels/workflows/CodeQL/badge.svg)](https://github.com/cwtickle/danoniplus/actions?query=workflow%3ACodeQL)
 [![Join the chat at https://gitter.im/danonicw/community](https://badges.gitter.im/danonicw/community.svg)](https://gitter.im/danonicw/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/cwtickle/danoniplus?sort=semver)](https://github.com/cwtickle/danoniplus/releases)
+[![GitHub All Releases](https://img.shields.io/github/downloads/cwtickle/danoniplus/total?color=%23ff3399&label=downloads%20%28recently%29)](https://github.com/cwtickle/danoniplus/releases)
+[![GitHub](https://img.shields.io/github/license/cwtickle/danoniplus)](https://github.com/cwtickle/danoniplus/blob/develop/LICENSE)  
 <img src="https://user-images.githubusercontent.com/44026291/153409010-f35e90fc-bbc9-4d0e-ae6a-1d5cada27db4.png" width="60%">
 
 Punching◇Panelsは、Dancing☆Onigiri (CW Edition)の基盤を利用したタッチ風リズムゲームです。  
