@@ -6,7 +6,7 @@
  * Source by tickle
  * Created: 2022/01/28
  * Revised: 2022/02/12
- * Source Version: Ver 1.1.1
+ * Source Version: Ver 1.2.0
  * 
  * https://github.com/cwtickle/punching-panels
  */
@@ -27,7 +27,11 @@ g_keyObj.chara18p_1 = [`aa`, `ab`, `ac`, `ad`, `ae`, `ba`, `bb`, `bc`, `bd`, `ca
 g_keyObj.color18p_0_0 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 2, 3, 4];
 g_keyObj.color18p_1_0 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 2, 3, 4];
 g_keyObj.shuffle18p_0_0 = [0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3];
+g_keyObj.shuffle18p_0_1 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 2, 3, 4];
+g_keyObj.shuffle18p_0_2 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 4, 3, 1, 0, 4, 3, 2, 1, 0];
 g_keyObj.shuffle18p_1_0 = [0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3];
+g_keyObj.shuffle18p_1_1 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 2, 3, 4];
+g_keyObj.shuffle18p_1_2 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 4, 3, 1, 0, 4, 3, 2, 1, 0];
 g_keyObj.stepRtn18p_0 = [`c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`];
 g_keyObj.stepRtn18p_1 = [`c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`];
 g_keyObj.pos18p_0 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
