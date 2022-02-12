@@ -6,7 +6,7 @@
  * Source by tickle
  * Created: 2022/01/28
  * Revised: 2022/02/12
- * Source Version: Ver 1.2.0
+ * Source Version: Ver 1.2.1
  * 
  * https://github.com/cwtickle/punching-panels
  */
@@ -71,17 +71,6 @@ g_rootObj.arrowMotion_data = `
 0,16,j44,j44
 0,17,j45,j45
 `;
-
-// 一部設定を上書きするための設定
-if (typeof g_lblRenames !== C_TYP_OBJECT) {
-	var g_lblRenames = {
-		option: true,
-		settingsDisplay: true,
-		main: true,
-		keyConfig: true,
-		result: true,
-	};
-}
 
 // ステップゾーンの位置変更 (ノーツはCSS側で制御)
 function pstyleMainInit() {
