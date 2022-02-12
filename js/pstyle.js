@@ -21,18 +21,28 @@ g_lblNameObj[`u_key`] = `panel`;
 g_lblNameObj[`u_k-`] = `p-`;
 
 // カスタムキー定義
-const pkeyData = `
-|keyExtraList=18p|
-|keyName18p=18|
-|chara18p=aa,ab,ac,ad,ae,ba,bb,bc,bd,ca,cb,cc,cd,da,db,dc,dd,de$18p_0|
-|color18p=0,1,2,3,4,0,1,3,4,0,1,3,4,0,1,2,3,4$18p_0|
-|shuffle18p=0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,3$18p_0|
-|stepRtn18p=c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c$18p_0|
-|pos18p=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17$18p_0|
-|keyCtrl18p=55/0,56/0,57/0,48/0,189/0,85/0,73/0,79/0,80/0,74/0,75/0,76/0,187/0,78/0,77/0,188/0,190/0,191/0$50/0,51/0,52/0,53/0,54/0,87/0,69/0,82/0,84/0,83/0,68/0,70/0,71/0,90/0,88/0,67/0,86/0,66/0|
-|div18p=18$18|
-`;
-keysConvert(dosConvert(pkeyData));
+g_keyObj.keyName18p = `18`;
+g_keyObj.chara18p_0 = [`aa`, `ab`, `ac`, `ad`, `ae`, `ba`, `bb`, `bc`, `bd`, `ca`, `cb`, `cc`, `cd`, `da`, `db`, `dc`, `dd`, `de`];
+g_keyObj.chara18p_1 = [`aa`, `ab`, `ac`, `ad`, `ae`, `ba`, `bb`, `bc`, `bd`, `ca`, `cb`, `cc`, `cd`, `da`, `db`, `dc`, `dd`, `de`];
+g_keyObj.color18p_0_0 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 2, 3, 4];
+g_keyObj.color18p_1_0 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 2, 3, 4];
+g_keyObj.shuffle18p_0_0 = [0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3];
+g_keyObj.shuffle18p_1_0 = [0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3];
+g_keyObj.stepRtn18p_0 = [`c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`];
+g_keyObj.stepRtn18p_1 = [`c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`];
+g_keyObj.pos18p_0 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+g_keyObj.pos18p_1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+g_keyObj.keyCtrl18p_0 = [[55, 0], [56, 0], [57, 0], [48, 0], [189, 0], [85, 0], [73, 0], [79, 0], [80, 0], [74, 0], [75, 0], [76, 0], [187, 0], [78, 0], [77, 0], [188, 0], [190, 0], [191, 0]];
+g_keyObj.keyCtrl18p_1 = [[50, 0], [51, 0], [52, 0], [53, 0], [54, 0], [87, 0], [69, 0], [82, 0], [84, 0], [83, 0], [68, 0], [70, 0], [71, 0], [90, 0], [88, 0], [67, 0], [86, 0], [66, 0]];
+g_keyObj.keyCtrl18p_0d = [[55, 0], [56, 0], [57, 0], [48, 0], [189, 0], [85, 0], [73, 0], [79, 0], [80, 0], [74, 0], [75, 0], [76, 0], [187, 0], [78, 0], [77, 0], [188, 0], [190, 0], [191, 0]];
+g_keyObj.keyCtrl18p_1d = [[50, 0], [51, 0], [52, 0], [53, 0], [54, 0], [87, 0], [69, 0], [82, 0], [84, 0], [83, 0], [68, 0], [70, 0], [71, 0], [90, 0], [88, 0], [67, 0], [86, 0], [66, 0]];
+g_keyObj.div18p_0 = 18;
+g_keyObj.div18p_1 = 18;
+
+[`color18p`, `shuffle18p`].forEach(type => {
+	const tmpName = Object.keys(g_keyObj).filter(val => val.startsWith(type) && val.endsWith(`_0`));
+	tmpName.forEach(property => g_keyObj[`${property.slice(0, -2)}`] = g_keyObj[property].concat());
+});
 
 // 矢印モーション初期定義
 g_rootObj.arrowMotion_data = `
@@ -56,10 +66,20 @@ g_rootObj.arrowMotion_data = `
 0,17,j45,j45
 `;
 
+// 一部設定を上書きするための設定
+if (typeof g_lblRenames !== C_TYP_OBJECT) {
+	var g_lblRenames = {
+		option: true,
+		settingsDisplay: true,
+		main: true,
+		keyConfig: true,
+		result: true,
+	};
+}
+
 // ステップゾーンの位置変更 (ノーツはCSS側で制御)
 function pstyleMainInit() {
 	if ([`18p`].includes(g_keyObj.currentKey)) {
-		const rev = g_stateObj.reverse;
 		for (let i = 0; i < 18; i++) {
 			if (document.getElementById(`stepRoot${i}`)) {
 				document.getElementById(`stepRoot${i}`).style.left = `${jstyleX[i]}px`;
