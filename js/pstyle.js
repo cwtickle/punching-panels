@@ -34,10 +34,12 @@ g_keyObj.pos18p_0 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1
 g_keyObj.pos18p_1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
 g_keyObj.keyCtrl18p_0 = [[55, 0], [56, 0], [57, 0], [48, 0], [189, 0], [85, 0], [73, 0], [79, 0], [80, 0], [74, 0], [75, 0], [76, 0], [187, 0], [78, 0], [77, 0], [188, 0], [190, 0], [191, 0]];
 g_keyObj.keyCtrl18p_1 = [[50, 0], [51, 0], [52, 0], [53, 0], [54, 0], [87, 0], [69, 0], [82, 0], [84, 0], [83, 0], [68, 0], [70, 0], [71, 0], [90, 0], [88, 0], [67, 0], [86, 0], [66, 0]];
-g_keyObj.keyCtrl18p_0d = [[55, 0], [56, 0], [57, 0], [48, 0], [189, 0], [85, 0], [73, 0], [79, 0], [80, 0], [74, 0], [75, 0], [76, 0], [187, 0], [78, 0], [77, 0], [188, 0], [190, 0], [191, 0]];
-g_keyObj.keyCtrl18p_1d = [[50, 0], [51, 0], [52, 0], [53, 0], [54, 0], [87, 0], [69, 0], [82, 0], [84, 0], [83, 0], [68, 0], [70, 0], [71, 0], [90, 0], [88, 0], [67, 0], [86, 0], [66, 0]];
 g_keyObj.div18p_0 = 18;
 g_keyObj.div18p_1 = 18;
+
+// デフォルト配列のコピー (g_keyObj.aaa_X から g_keyObj.aaa_Xd を作成)
+const keyCtrlNameP = Object.keys(g_keyObj).filter(val => val.startsWith(`keyCtrl18p`));
+keyCtrlNameP.forEach(property => g_keyObj[`${property}d`] = copyArray2d(g_keyObj[property]));
 
 [`color18p`, `shuffle18p`].forEach(type => {
 	const tmpName = Object.keys(g_keyObj).filter(val => val.startsWith(type) && val.endsWith(`_0`));
