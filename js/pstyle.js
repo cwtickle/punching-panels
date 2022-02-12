@@ -72,17 +72,6 @@ g_rootObj.arrowMotion_data = `
 0,17,j45,j45
 `;
 
-// 一部設定を上書きするための設定
-if (typeof g_lblRenames !== C_TYP_OBJECT) {
-	var g_lblRenames = {
-		option: true,
-		settingsDisplay: true,
-		main: true,
-		keyConfig: true,
-		result: true,
-	};
-}
-
 // ステップゾーンの位置変更 (ノーツはCSS側で制御)
 function pstyleMainInit() {
 	if ([`18p`].includes(g_keyObj.currentKey)) {
