@@ -31,6 +31,7 @@ If the life of the life gauge remains by the end of the game or it is over the q
 - [Dancing☆Onigiri 作品一覧](https://cw7.sakura.ne.jp/lst/)  
 
 ## How to Make / 作り方
+- [本リポジトリWiki](https://github.com/cwtickle/punching-panels/wiki)
 - [譜面の作成概要](https://github.com/cwtickle/danoniplus/wiki/HowToMake)  
 ※ Dancing☆Onigiri (CW Edition)の基盤を使っているため、作り方は同じです。
 
