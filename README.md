@@ -4,7 +4,7 @@
 [![Join the chat at https://gitter.im/danonicw/community](https://badges.gitter.im/danonicw/community.svg)](https://gitter.im/danonicw/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/cwtickle/punching-panels?sort=semver)](https://github.com/cwtickle/punching-panels/releases)
 [![GitHub All Releases](https://img.shields.io/github/downloads/cwtickle/punching-panels/total?color=%239933ff&label=downloads%20%28recently%29)](https://github.com/cwtickle/punching-panels/releases)
-[![GitHub](https://img.shields.io/github/license/cwtickle/punching-panels)](https://github.com/cwtickle/punching-panels/blob/develop/LICENSE)  
+[![GitHub](https://img.shields.io/github/license/cwtickle/punching-panels)](https://github.com/cwtickle/punching-panels/blob/develop/LICENSE) [![Join the chat at https://gitter.im/danonicw/punching-panels](https://badges.gitter.im/danonicw/punching-panels.svg)](https://gitter.im/danonicw/punching-panels?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 <img src="https://user-images.githubusercontent.com/44026291/153409010-f35e90fc-bbc9-4d0e-ae6a-1d5cada27db4.png" width="60%">
 
 Punching◇Panelsは、Dancing☆Onigiri (CW Edition)の基盤を利用したタッチ風リズムゲームです。  
