@@ -50,10 +50,11 @@ div[id^="stepHit"] {
 
 @keyframes move11 {
   0% {
-    left: 50px;
+    left: 0px;
     top: 110px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -72,10 +73,11 @@ div[id^="stepHit"] {
 
 @keyframes move12 {
   0% {
-    left: 150px;
-    top: 110px;
+    left: 120px;
+    top: 80px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -98,6 +100,7 @@ div[id^="stepHit"] {
     top: 60px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -115,10 +118,11 @@ div[id^="stepHit"] {
 
 @keyframes move14 {
   0% {
-    left: 450px;
-    top: 110px;
+    left: 480px;
+    top: 80px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -136,10 +140,11 @@ div[id^="stepHit"] {
 
 @keyframes move15 {
   0% {
-    left: 550px;
+    left: 600px;
     top: 110px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -157,10 +162,11 @@ div[id^="stepHit"] {
 
 @keyframes move21 {
   0% {
-    left: 100px;
+    left: 50px;
     top: 170px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -178,10 +184,11 @@ div[id^="stepHit"] {
 
 @keyframes move22 {
   0% {
-    left: 200px;
-    top: 170px;
+    left: 170px;
+    top: 140px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -200,10 +207,11 @@ div[id^="stepHit"] {
 
 @keyframes move23 {
   0% {
-    left: 400px;
-    top: 170px;
+    left: 430px;
+    top: 140px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -221,10 +229,11 @@ div[id^="stepHit"] {
 
 @keyframes move24 {
   0% {
-    left: 500px;
+    left: 550px;
     top: 170px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -242,10 +251,11 @@ div[id^="stepHit"] {
 
 @keyframes move31 {
   0% {
-    left: 100px;
+    left: 50px;
     top: 230px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -263,10 +273,11 @@ div[id^="stepHit"] {
 
 @keyframes move32 {
   0% {
-    left: 200px;
-    top: 230px;
+    left: 170px;
+    top: 260px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -285,10 +296,11 @@ div[id^="stepHit"] {
 
 @keyframes move33 {
   0% {
-    left: 400px;
-    top: 230px;
+    left: 430px;
+    top: 260px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -306,10 +318,11 @@ div[id^="stepHit"] {
 
 @keyframes move34 {
   0% {
-    left: 500px;
+    left: 550px;
     top: 230px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -327,10 +340,11 @@ div[id^="stepHit"] {
 
 @keyframes move41 {
   0% {
-    left: 50px;
+    left: 0px;
     top: 290px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -348,10 +362,11 @@ div[id^="stepHit"] {
 
 @keyframes move42 {
   0% {
-    left: 150px;
-    top: 290px;
+    left: 120px;
+    top: 340px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -371,9 +386,10 @@ div[id^="stepHit"] {
 @keyframes move43 {
   0% {
     left: 300px;
-    top: 340px;
+    top: 390px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -391,10 +407,11 @@ div[id^="stepHit"] {
 
 @keyframes move44 {
   0% {
-    left: 450px;
-    top: 290px;
+    left: 480px;
+    top: 340px;
     width: 50px;
     height: 0px;
+    background: #ffffff;
   }
 
   100% {
@@ -411,6 +428,420 @@ div[id^="stepHit"] {
 }
 
 @keyframes move45 {
+  0% {
+    left: 600px;
+    top: 290px;
+    width: 50px;
+    height: 0px;
+    background: #ffffff;
+  }
+
+  100% {
+    left: 500px;
+    top: 290px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j11_org, .j12_org, .j13_org, .j14_org, .j15_org, .j21_org, .j22_org, .j23_org, .j24_org, .j31_org, .j32_org, .j33_org, .j34_org, .j41_org, .j42_org, .j43_org, .j44_org, .j45_org {
+  animation-timing-function: linear, step-end;
+  animation-fill-mode: forwards;
+}
+
+.j11_org, .j21_org, .j31_org, .j41_org {
+  border: 2px solid #6666ff;
+  background: #000066;
+}
+
+.j12_org, .j22_org, .j32_org, .j42_org {
+  border: 2px solid #66ffff;
+  background: #003333;
+}
+
+.j13_org, .j43_org {
+  border: 2px solid #ffffff;
+  background: #333333;
+}
+
+.j14_org, .j23_org, .j33_org, .j44_org {
+  border: 2px solid #ffff66;
+  background: #333300;
+}
+
+.j15_org, .j24_org, .j34_org, .j45_org {
+  border: 2px solid #ff9966;
+  background: #663300;
+}
+
+.j11_org {
+  animation-name: move11_org;
+  top: 50px;
+}
+
+@keyframes move11_org {
+  0% {
+    left: 50px;
+    top: 110px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 100px;
+    top: 110px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j12_org {
+  animation-name: move12_org;
+  top: 50px;
+  transform-origin: center;
+}
+
+@keyframes move12_org {
+  0% {
+    left: 150px;
+    top: 110px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 200px;
+    top: 110px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+.j13_org {
+  animation-name: move13_org;
+  top: 50px;
+}
+
+@keyframes move13_org {
+  0% {
+    left: 300px;
+    top: 60px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 300px;
+    top: 110px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j14_org {
+  animation-name: move14_org;
+  top: 50px;
+}
+
+@keyframes move14_org {
+  0% {
+    left: 450px;
+    top: 110px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 400px;
+    top: 110px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j15_org {
+  animation-name: move15_org;
+  top: 50px;
+}
+
+@keyframes move15_org {
+  0% {
+    left: 550px;
+    top: 110px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 500px;
+    top: 110px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j21_org {
+  animation-name: move21_org;
+  top: 150px;
+}
+
+@keyframes move21_org {
+  0% {
+    left: 100px;
+    top: 170px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 150px;
+    top: 170px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j22_org {
+  animation-name: move22_org;
+  top: 150px;
+}
+
+@keyframes move22_org {
+  0% {
+    left: 200px;
+    top: 170px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 250px;
+    top: 170px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+.j23_org {
+  animation-name: move23_org;
+  top: 150px;
+}
+
+@keyframes move23_org {
+  0% {
+    left: 400px;
+    top: 170px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 350px;
+    top: 170px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j24_org {
+  animation-name: move24_org;
+  top: 150px;
+}
+
+@keyframes move24_org {
+  0% {
+    left: 500px;
+    top: 170px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 450px;
+    top: 170px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j31_org {
+  animation-name: move31_org;
+  top: 250px;
+}
+
+@keyframes move31_org {
+  0% {
+    left: 100px;
+    top: 230px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 150px;
+    top: 230px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j32_org {
+  animation-name: move32_org;
+  top: 250px;
+}
+
+@keyframes move32_org {
+  0% {
+    left: 200px;
+    top: 230px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 250px;
+    top: 230px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+.j33_org {
+  animation-name: move33_org;
+  top: 250px;
+}
+
+@keyframes move33_org {
+  0% {
+    left: 400px;
+    top: 230px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 350px;
+    top: 230px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j34_org {
+  animation-name: move34_org;
+  top: 250px;
+}
+
+@keyframes move34_org {
+  0% {
+    left: 500px;
+    top: 230px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 450px;
+    top: 230px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j41_org {
+  animation-name: move41_org;
+  top: 350px;
+}
+
+@keyframes move41_org {
+  0% {
+    left: 50px;
+    top: 290px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 100px;
+    top: 290px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j42_org {
+  animation-name: move42_org;
+  top: 350px;
+}
+
+@keyframes move42_org {
+  0% {
+    left: 150px;
+    top: 290px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 200px;
+    top: 290px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+
+.j43_org {
+  animation-name: move43_org;
+  top: 350px;
+}
+
+@keyframes move43_org {
+  0% {
+    left: 300px;
+    top: 340px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 300px;
+    top: 290px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j44_org {
+  animation-name: move44_org;
+  top: 350px;
+}
+
+@keyframes move44_org {
+  0% {
+    left: 450px;
+    top: 290px;
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: 400px;
+    top: 290px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j45_org {
+  animation-name: move45_org;
+  top: 350px;
+}
+
+@keyframes move45_org {
   0% {
     left: 550px;
     top: 290px;
