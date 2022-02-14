@@ -1,7 +1,6 @@
 # Punching◇Panels
 
 [![CodeQL](https://github.com/cwtickle/punching-panels/workflows/CodeQL/badge.svg)](https://github.com/cwtickle/danoniplus/actions?query=workflow%3ACodeQL)
-[![Join the chat at https://gitter.im/danonicw/community](https://badges.gitter.im/danonicw/community.svg)](https://gitter.im/danonicw/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/cwtickle/punching-panels?sort=semver)](https://github.com/cwtickle/punching-panels/releases)
 [![GitHub All Releases](https://img.shields.io/github/downloads/cwtickle/punching-panels/total?color=%239933ff&label=downloads%20%28recently%29)](https://github.com/cwtickle/punching-panels/releases)
 [![GitHub](https://img.shields.io/github/license/cwtickle/punching-panels)](https://github.com/cwtickle/punching-panels/blob/develop/LICENSE)  
