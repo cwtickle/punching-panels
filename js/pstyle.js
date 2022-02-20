@@ -72,6 +72,13 @@ g_rootObj.arrowMotion_data = `
 0,17,j45,j45
 `;
 
+// パンパネ関係のキーの警告文を除去
+function pstyleTitleInit() {
+	g_errMsgObj.title = g_errMsgObj.title.filter(value => value.indexOf(`18p`) === -1);
+	makeWarningWindow();
+}
+g_customJsObj.title.push(pstyleTitleInit);
+
 // ステップゾーンの位置変更 (ノーツはCSS側で制御)
 function pstyleMainInit() {
 	if ([`18p`].includes(g_keyObj.currentKey)) {
