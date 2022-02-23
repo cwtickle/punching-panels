@@ -43,6 +43,9 @@ g_keyObj.keyCtrl18p_1 = [[50, 0], [51, 0], [52, 0], [53, 0], [54, 0], [87, 0], [
 g_keyObj.div18p_0 = 18;
 g_keyObj.div18p_1 = 18;
 
+g_rootObj.imgType = `panels,svg,true,0`;
+g_rootObj.arrowJdgY = -160;
+
 // デフォルト配列のコピー (g_keyObj.aaa_X から g_keyObj.aaa_Xd を作成)
 const keyCtrlNameP = Object.keys(g_keyObj).filter(val => val.startsWith(`keyCtrl18p`));
 keyCtrlNameP.forEach(property => g_keyObj[`${property}d`] = copyArray2d(g_keyObj[property]));
@@ -73,13 +76,6 @@ g_rootObj.arrowMotion_data = `
 0,16,j44_org,j44
 0,17,j45_org,j45
 `;
-
-// パンパネ関係のキーの警告文を除去
-function pstyleTitleInit() {
-	g_errMsgObj.title = g_errMsgObj.title.filter(value => value.indexOf(`18p`) === -1);
-	makeWarningWindow();
-}
-g_customJsObj.title.push(pstyleTitleInit);
 
 // ステップゾーンの位置変更 (ノーツはCSS側で制御)
 function pstyleMainInit() {
