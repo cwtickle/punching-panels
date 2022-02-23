@@ -5,8 +5,8 @@
  * 
  * Source by tickle
  * Created: 2022/01/28
- * Revised: 2022/02/12
- * Source Version: Ver 1.2.1
+ * Revised: 2022/02/23
+ * Source Version: Ver 1.3.1
  * 
  * https://github.com/cwtickle/punching-panels
  */
@@ -19,6 +19,8 @@ g_lblNameObj.star = `◇`;
 g_lblNameObj.onigiri = `PANELS`;
 g_lblNameObj[`u_key`] = `panel`;
 g_lblNameObj[`u_k-`] = `p-`;
+g_lblNameObj.Reverse = `Dynamic`;
+g_lblNameObj[`u_Reverse`] = `Dynamic`;
 
 // カスタムキー定義
 g_keyObj.keyName18p = `18`;
@@ -41,6 +43,9 @@ g_keyObj.keyCtrl18p_1 = [[50, 0], [51, 0], [52, 0], [53, 0], [54, 0], [87, 0], [
 g_keyObj.div18p_0 = 18;
 g_keyObj.div18p_1 = 18;
 
+g_rootObj.imgType = `panels,svg,true,0`;
+g_rootObj.arrowJdgY = -160;
+
 // デフォルト配列のコピー (g_keyObj.aaa_X から g_keyObj.aaa_Xd を作成)
 const keyCtrlNameP = Object.keys(g_keyObj).filter(val => val.startsWith(`keyCtrl18p`));
 keyCtrlNameP.forEach(property => g_keyObj[`${property}d`] = copyArray2d(g_keyObj[property]));
@@ -52,24 +57,24 @@ keyCtrlNameP.forEach(property => g_keyObj[`${property}d`] = copyArray2d(g_keyObj
 
 // 矢印モーション初期定義
 g_rootObj.arrowMotion_data = `
-0,0,j11,j11
-0,1,j12,j12
-0,2,j13,j13
-0,3,j14,j14
-0,4,j15,j15
-0,5,j21,j21
-0,6,j22,j22
-0,7,j23,j23
-0,8,j24,j24
-0,9,j31,j31
-0,10,j32,j32
-0,11,j33,j33
-0,12,j34,j34
-0,13,j41,j41
-0,14,j42,j42
-0,15,j43,j43
-0,16,j44,j44
-0,17,j45,j45
+0,0,j11_org,j11
+0,1,j12_org,j12
+0,2,j13_org,j13
+0,3,j14_org,j14
+0,4,j15_org,j15
+0,5,j21_org,j21
+0,6,j22_org,j22
+0,7,j23_org,j23
+0,8,j24_org,j24
+0,9,j31_org,j31
+0,10,j32_org,j32
+0,11,j33_org,j33
+0,12,j34_org,j34
+0,13,j41_org,j41
+0,14,j42_org,j42
+0,15,j43_org,j43
+0,16,j44_org,j44
+0,17,j45_org,j45
 `;
 
 // ステップゾーンの位置変更 (ノーツはCSS側で制御)
