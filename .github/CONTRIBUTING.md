@@ -1,23 +1,27 @@
 # How to Contribute / 要望・不具合報告について
 ## [Japanese]
-要望・不具合報告がある場合、以下のいずれかの方法で行うことができます。
+要望・不具合報告がある場合、以下のいずれかの方法で行うことができます。  
+なお、修正できるファイルは現状「pstyle.js」「pstyle.css」と「img/panels」配下のファイルのみです。  
+それ以外のファイルは[上位リポジトリ](https://github.com/cwtickle/danoniplus)に依存するため、変更できません。
 
-- リポジトリをForkして編集した後、Pull Requestを「cwtickle/danoniplus」の「develop」ブランチへ送る。
-- 当リポジトリのIssueもしくは[Gitter](https://gitter.im/danonicw/community)に要望・不具合内容を報告する。  
+- リポジトリをForkして編集した後、Pull Requestを「cwtickle/punching-panels」の「develop」ブランチへ送る。
+- 当リポジトリのIssueもしくは[Gitter](https://gitter.im/danonicw/punching-panels)に要望・不具合内容を報告する。  
 ※Gitterは「Twitterアカウント」を持っている方でも参加可能です。  
 　Gitter内では、Github同様のmarkdownが使えます。お気軽にどうぞ！
 - 要望・不具合内容をティックル宛([@cw_tickle](https://twitter.com/cw_tickle))へ直接連絡する。
 
 ## [English]
-If you have a request or defect report, you can do it in one of the following ways.
+If you have a request or defect report, you can do it in one of the following ways.  
+Currently, only "pstyle.js", "pstyle.css" and files under "img/panels" can be modified.  
+All other files are dependent on [the upper repository](https://github.com/cwtickle/danoniplus) and cannot be modified.
 
-- Fork and edit the repository, send Pull Request to "cwtickle / danoniplus" "develop" branch.
+- Fork and edit the repository, send Pull Request to "cwtickle / punching-panels" "develop" branch.
 1. Fork it
 1. Create your feature branch (git checkout -b my-new-feature)
 1. Commit your changes (git commit -am 'Added some feature')
 1. Push to the branch (git push origin my-new-feature)
 1. Create new Pull Request to develop branch
-- Report the request / problem contents to [Gitter](https://gitter.im/danonicw/community).  
+- Report the request / problem contents to [Gitter](https://gitter.im/danonicw/punching-panels).  
 ※ Gitter can participate even if you have "Twitter account".  
 　 In Gitter, you can use markdown similar to Github. Feel free to help yourself!
 - Contact the tickle directly ([@cw_tickle](https://twitter.com/cw_tickle)) with the request / problem content.
