@@ -29,8 +29,7 @@ On the other hand, if you remove the timing *:( Bad*, *:_( Miss* will be, life f
 If the life of the life gauge remains by the end of the game or it is over the quota, the game is cleared.
 
 ## Works / 公開作品
-- [Dancing☆Onigiri サイト一覧](https://cw7.sakura.ne.jp/danonidb/)  
-- [Dancing☆Onigiri 作品一覧](https://cw7.sakura.ne.jp/lst/)  
+- [👊👊👊 Punching◇Panels難易度表 👊👊👊](https://suzme.github.io/punpane/)
 
 ## How to Make / 作り方
 - [本リポジトリWiki](https://github.com/cwtickle/punching-panels/wiki)
