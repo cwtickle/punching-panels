@@ -54,9 +54,8 @@ If you would like to cooperate with the development, please see below. Even if y
 
 ## Related Tools Repository / 関連ツール
 - [Dancing☆Onigiri (CW Edition)](https://github.com/cwtickle/danoniplus)
-- [Dancing☆Onigiri エディター(CW Edition 対応)](https://github.com/superkuppabros/danoni-editor) @superkuppabros
+- [Punching◇Panels エディター](https://github.com/suzme/punpane-editor) @suzme
 - [ダンおに曲データjs化ツール](https://github.com/suzme/danoni-base64) @suzme
-- [ダンおに矢印色ツール](https://github.com/suzme/danoni-colorpicker) @suzme
 - [ダンおにゲージ計算機 (Gauge Calculator)](http://www.omission0.com/other/gauge_calculator/) @goe0
 
 ## License / ライセンス
