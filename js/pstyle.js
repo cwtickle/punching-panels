@@ -45,6 +45,7 @@ g_keyObj.keyCtrl18p_0 = [[55, 0], [56, 0], [57, 0], [48, 0], [189, 0], [85, 0], 
 g_keyObj.keyCtrl18p_1 = [[50, 0], [51, 0], [52, 0], [53, 0], [54, 0], [87, 0], [69, 0], [82, 0], [84, 0], [83, 0], [68, 0], [70, 0], [71, 0], [90, 0], [88, 0], [67, 0], [86, 0], [66, 0]];
 g_keyObj.div18p_0 = 18;
 g_keyObj.div18p_1 = 18;
+g_keyObj.minWidth18p = 650;
 
 g_rootObj.imgType = `panels,svg,true,0`;
 g_rootObj.arrowJdgY = -160;
