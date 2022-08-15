@@ -6,7 +6,7 @@
  * Source by tickle
  * Created: 2022/01/28
  * Revised: 2022/08/15
- * Source Version: Ver 1.3.2
+ * Source Version: Ver 1.4.0
  * 
  * https://github.com/cwtickle/punching-panels
  */
