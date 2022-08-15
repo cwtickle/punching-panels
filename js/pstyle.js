@@ -23,6 +23,7 @@ g_lblNameObj.Reverse = `Dynamic`;
 g_lblNameObj[`u_Reverse`] = `Dynamic`;
 g_lang_msgObj.Ja.reverse = `パネルの移動パターンを変更します。`;
 g_lang_msgObj.En.reverse = `Change the panel movement pattern.`;
+g_rootObj.arrowEffectUse = `false,ON`;
 
 // カスタムキー定義
 g_keyObj.keyName18p = `18`;
