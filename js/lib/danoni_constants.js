@@ -5,7 +5,7 @@
  *
  * Source by tickle
  * Created : 2019/11/19
- * Revised : 2022/02/23 (v26.3.1)
+ * Revised : 2022/07/31 (v27.8.0)
  *
  * https://github.com/cwtickle/danoniplus
  */
@@ -28,6 +28,19 @@ const C_LBL_BASICFONT = `"Meiryo UI", sans-serif`;
 
 const C_BTN_HEIGHT = 50;
 const C_LNK_HEIGHT = 30;
+const C_LEN_SETLBL_LEFT = 160;
+const C_LEN_SETLBL_WIDTH = 210;
+const C_LEN_DIFSELECTOR_WIDTH = 250;
+const C_LEN_DIFCOVER_WIDTH = 110;
+const C_LEN_SETLBL_HEIGHT = 23;
+const C_SIZ_SETLBL = 17;
+const C_LEN_SETDIFLBL_HEIGHT = 25;
+const C_SIZ_SETDIFLBL = 17;
+const C_LEN_SETMINI_WIDTH = 40;
+const C_SIZ_SETMINI = 18;
+const C_SIZ_DIFSELECTOR = 14;
+const C_SIZ_MAIN = 14;
+const C_SIZ_MUSIC_TITLE = 13;
 
 // スプライト（ムービークリップ相当）のルート
 const C_SPRITE_ROOT = `divRoot`;
@@ -57,6 +70,284 @@ const C_TYP_OBJECT = `object`;
 const C_TYP_FUNCTION = `function`;
 const C_TYP_SWITCH = `switch`;
 const C_TYP_CALC = `calc`;
+
+// ウィンドウサイズ
+let [g_sWidth, g_sHeight] = [
+    setVal($id(`canvas-frame`).width, 500, C_TYP_FLOAT), setVal($id(`canvas-frame`).height, 500, C_TYP_FLOAT)
+];
+$id(`canvas-frame`).width = `${g_sWidth}px`;
+$id(`canvas-frame`).margin = `auto`;
+
+// 固定ウィンドウサイズ
+const g_windowObj = {
+    divRoot: { margin: `auto`, letterSpacing: `normal` },
+    divBack: { background: `linear-gradient(#000000, #222222)` },
+
+    difList: { x: 165, y: 65, w: 280, h: 255, overflow: `auto` },
+    difCover: { x: 25, y: 65, w: 140, h: 255, overflow: `auto`, opacity: 0.95 },
+
+    scoreDetail: { x: 20, y: 90, w: 420, h: 230, visibility: `hidden` },
+    detailObj: { w: 420, h: 230, visibility: `hidden` },
+
+    colorPickSprite: { x: 0, y: 90, w: 50, h: 280 },
+};
+
+const g_lblPosObj = {};
+
+// 可変部分のウィンドウサイズを更新
+const updateWindowSiz = _ => {
+    Object.assign(g_windowObj, {
+        optionSprite: { x: (g_sWidth - 450) / 2, y: 65 + (g_sHeight - 500) / 2, w: 450, h: 325 },
+        displaySprite: { x: 25, y: 30, w: (g_sWidth - 450) / 2, h: C_LEN_SETLBL_HEIGHT * 5 },
+        keyconSprite: { y: 88 + (g_sHeight - 500) / 2, h: g_sHeight, overflow: `auto` },
+        loader: { y: g_sHeight - 10, h: 10, backgroundColor: `#333333` },
+        playDataWindow: { x: g_sWidth / 2 - 225, y: 70 + (g_sHeight - 500) / 2, w: 450, h: 110 },
+        resultWindow: { x: g_sWidth / 2 - 200, y: 185 + (g_sHeight - 500) / 2, w: 400, h: 210 },
+    });
+
+    Object.assign(g_lblPosObj, {
+
+        /** タイトル画面 */
+        btnReset: {
+            x: 0, y: g_sHeight - 20, w: g_sWidth / 4, h: 16, siz: 12, title: g_msgObj.dataReset,
+        },
+        btnReload: {
+            x: 10, y: 10, w: 30, h: 30, siz: 20, title: g_msgObj.reload,
+        },
+        btnHelp: {
+            x: 0, y: g_sHeight - 150, w: 40, h: 40, siz: 30, title: g_msgObj.howto,
+        },
+        lnkMaker: {
+            x: 0, y: g_sHeight - 50, w: g_sWidth / 2, h: C_LNK_HEIGHT,
+            align: C_ALIGN_LEFT, title: g_headerObj.creatorUrl,
+        },
+        lnkArtist: {
+            x: g_sWidth / 2, y: g_sHeight - 50, w: g_sWidth / 2, h: C_LNK_HEIGHT,
+            align: C_ALIGN_LEFT, title: g_headerObj.artistUrl,
+        },
+        lnkVersion: {
+            x: g_sWidth / 4, y: g_sHeight - 20, w: g_sWidth * 3 / 4 - 20, h: 16,
+            align: C_ALIGN_RIGHT, title: g_msgObj.github,
+        },
+        lnkComparison: {
+            x: g_sWidth - 20, y: g_sHeight - 20, w: 20, h: 16, siz: 12, title: g_msgObj.security,
+        },
+        lblComment: {
+            x: 0, y: 70, w: g_sWidth, h: g_sHeight - 180, siz: C_SIZ_DIFSELECTOR, align: C_ALIGN_LEFT,
+            overflow: `auto`, background: `#222222`, color: `#cccccc`, display: C_DIS_NONE,
+        },
+        btnComment: {
+            x: g_sWidth - 160, y: (g_sHeight / 2) + 150, w: 140, h: 50, siz: 20, border: `solid 1px #999999`,
+        },
+
+        /** 設定画面 */
+        btnBack: {},
+        btnKeyConfig: {
+            x: g_sWidth / 3,
+        },
+        btnPlay: {
+            x: g_sWidth * 2 / 3,
+        },
+        btnSwitchSetting: {
+            x: g_sWidth / 2 + 175 - C_LEN_SETMINI_WIDTH / 2, y: 25, w: C_LEN_SETMINI_WIDTH, h: 40,
+        },
+        btnSave: {
+            x: 0, y: 5, w: g_sWidth / 5, h: 16, siz: 12,
+            title: g_msgObj.dataSave, borderStyle: `solid`,
+        },
+
+        btnReverse: {
+            x: 160, y: 0, w: 90, h: 21, siz: C_SIZ_DIFSELECTOR, borderStyle: `solid`,
+        },
+        lblGauge2: {
+            x: C_LEN_SETLBL_LEFT - 35, y: C_LEN_SETLBL_HEIGHT,
+            w: C_LEN_SETLBL_WIDTH + 60, h: C_LEN_SETLBL_HEIGHT * 2, siz: 11,
+        },
+        lnkFadein: {
+            x: C_LEN_SETLBL_LEFT, y: 0,
+        },
+        lblFadeinBar: {
+            x: C_LEN_SETLBL_LEFT, y: 0,
+        },
+
+        /** 設定: 譜面明細子画面 */
+        lnkScoreDetailB: {
+            x: 10, w: 100, visibility: `hidden`,
+        },
+        lnkScoreDetail: {
+            x: 10, w: 100, borderStyle: `solid`,
+        },
+
+        lblTooldif: {
+            y: 5, w: 250, siz: C_SIZ_JDGCNTS,
+        },
+        dataTooldif: {
+            x: 270, y: 3, w: 160, siz: 18,
+        },
+        lblDouji: {},
+        lblTate: {
+            x: 270,
+        },
+        dataDouji: {
+            x: 200, w: 160,
+        },
+        dataTate: {
+            x: 345, w: 160,
+        },
+        lblArrowInfo: {
+            x: 130, y: 45, w: 290, siz: C_SIZ_JDGCNTS,
+        },
+        dataArrowInfo: {
+            x: 270, y: 45, w: 160, siz: C_SIZ_JDGCNTS,
+        },
+        lblArrowInfo2: {
+            x: 130, y: 70, w: 200, h: 90,
+        },
+        dataArrowInfo2: {
+            x: 140, y: 70, w: 275, h: 150, overflow: `auto`,
+        },
+        lnkDifInfo: {
+            w: C_LEN_DIFCOVER_WIDTH, borderStyle: `solid`,
+        },
+
+        /** ディスプレイ画面 */
+        scMsg: {
+            x: 0, y: g_sHeight - 45, w: g_sWidth, h: 20,
+        },
+        sdDesc: {
+            x: 0, y: 65, w: g_sWidth, h: 20, siz: C_SIZ_MAIN,
+        },
+        lblAppearancePos: {
+            x: C_LEN_SETLBL_LEFT, y: 20, siz: 12, align: C_ALIGN_CENTER,
+        },
+        lblAppearanceBar: {
+            x: C_LEN_SETLBL_LEFT, y: 15,
+        },
+        lnkLockBtn: {
+            x: C_LEN_SETLBL_LEFT + C_LEN_SETLBL_WIDTH - 40, y: 0, w: 40, h: C_LEN_SETLBL_HEIGHT, siz: 12,
+            borderStyle: `solid`,
+        },
+
+        /** キーコンフィグ画面 */
+        scKcMsg: {
+            x: 0, y: g_sHeight - 45, w: g_sWidth, h: 20,
+        },
+        kcMsg: {
+            x: 0, y: g_sHeight - 25, w: g_sWidth, h: 20, siz: C_SIZ_MAIN,
+        },
+        kcDesc: {
+            x: 0, y: 68, w: g_sWidth, h: 20,
+        },
+        kcShuffleDesc: {
+            x: 5, y: g_sHeight - 125, w: g_sWidth, h: 20, align: C_ALIGN_LEFT,
+        },
+        pickPos: {
+            x: 0, w: 50, h: 15, siz: 11, align: C_ALIGN_LEFT, background: `#${g_headerObj.baseBrightFlg ? `eeeeee` : `111111`}80`,
+        },
+        lnkColorCopy: {
+            x: 35, y: -5, w: 30, h: 20, siz: 14,
+        },
+
+        btnKcBack: {
+            x: g_sWidth / 3, y: g_sHeight - 75,
+            w: g_sWidth / 3, h: C_BTN_HEIGHT / 2, siz: C_LBL_BTNSIZE * 2 / 3,
+        },
+        lblPattern: {
+            x: g_sWidth / 6, y: g_sHeight - 100, w: g_sWidth / 3, h: C_BTN_HEIGHT / 2,
+        },
+        btnPtnChangeR: {
+            x: g_sWidth / 2, y: g_sHeight - 100,
+            w: g_sWidth / 6, h: C_BTN_HEIGHT / 2, siz: C_LBL_BTNSIZE * 2 / 3,
+        },
+        btnPtnChangeL: {
+            x: 0, y: g_sHeight - 100,
+            w: g_sWidth / 6, h: C_BTN_HEIGHT / 2, siz: C_LBL_BTNSIZE * 2 / 3,
+        },
+        btnKcReset: {
+            x: 0, y: g_sHeight - 75,
+            w: g_sWidth / 3, h: C_BTN_HEIGHT / 2, siz: C_LBL_BTNSIZE * 2 / 3,
+        },
+
+        /** メイン画面 */
+        stepHit: {
+            x: -15, y: -15, w: C_ARW_WIDTH + 30, h: C_ARW_WIDTH + 30,
+        },
+        filterBar: {
+            w: g_headerObj.playingWidth - 50, h: 1, styleName: `lifeBar`, opacity: 0.0625,
+        },
+        filterView: {
+            x: g_headerObj.playingWidth - 70, y: 0, w: 10, h: 10, siz: 10, align: C_ALIGN_RIGHT,
+        },
+        frzHitTop: {
+            x: -8, y: -8, w: C_ARW_WIDTH + 16, h: C_ARW_WIDTH + 16,
+        },
+        lblCredit: {
+            x: 125, y: g_sHeight - 30, w: g_headerObj.playingWidth - 125, h: 20, align: C_ALIGN_LEFT,
+        },
+        lblDifName: {
+            x: 125, y: g_sHeight - 16, w: g_headerObj.playingWidth, h: 20, align: C_ALIGN_LEFT,
+        },
+        lblTime1: {
+            x: 18, y: g_sHeight - 30, w: 40, h: 20, siz: C_SIZ_MAIN, align: C_ALIGN_RIGHT,
+        },
+        lblTime2: {
+            x: 60, y: g_sHeight - 30, w: 60, h: 20, siz: C_SIZ_MAIN,
+        },
+        lblWord: {
+            x: 100, w: g_headerObj.playingWidth - 200, h: 50,
+            siz: C_SIZ_MAIN, align: C_ALIGN_LEFT, display: `block`, margin: `auto`,
+        },
+        finishView: {
+            x: g_headerObj.playingWidth / 2 - 150, y: g_sHeight / 2 - 50, w: 300, h: 20, siz: 50,
+        },
+        musicInfoOFF: {
+            x: 20, animationDuration: `4.0s`, animationName: `leftToRightFade`, animationFillMode: `both`,
+        },
+
+        /** 結果画面 */
+        lblRank: {
+            x: 340, y: 160, w: 70, h: 20, siz: 50, align: C_ALIGN_CENTER,
+        },
+        lblResultPre: {
+            x: g_sWidth / 2 - 150, y: g_sHeight / 2 - 160, w: 200, h: 50, siz: 60, opacity: 0,
+        },
+        lblResultPre2: {
+            x: g_sWidth / 2 + 50, y: 40, w: 200, h: 30, siz: 20,
+        },
+        btnRsBack: {
+            w: g_sWidth / 4, h: C_BTN_HEIGHT * 5 / 4, animationName: `smallToNormalY`,
+        },
+        btnRsCopy: {
+            x: g_sWidth / 4, w: g_sWidth / 2, h: C_BTN_HEIGHT * 5 / 8, siz: 24, animationName: `smallToNormalY`,
+        },
+        btnRsTweet: {
+            x: g_sWidth / 4, y: g_sHeight - 100 + C_BTN_HEIGHT * 5 / 8,
+            w: g_sWidth / 4, h: C_BTN_HEIGHT * 5 / 8, siz: 24, animationName: `smallToNormalY`,
+        },
+        btnRsGitter: {
+            x: g_sWidth / 2, y: g_sHeight - 100 + C_BTN_HEIGHT * 5 / 8,
+            w: g_sWidth / 4, h: C_BTN_HEIGHT * 5 / 8, siz: 24, animationName: `smallToNormalY`,
+        },
+        btnRsRetry: {
+            x: g_sWidth / 4 * 3, w: g_sWidth / 4, h: C_BTN_HEIGHT * 5 / 4, animationName: `smallToNormalY`,
+        },
+    });
+};
+
+// ウィンドウ位置
+const g_windowAlign = {
+    left: _ => {
+        $id(`canvas-frame`).marginLeft = `0px`;
+        $id(`canvas-frame`).marginRight = `auto`;
+    },
+    center: _ => {
+        $id(`canvas-frame`).margin = `auto`;
+    },
+    right: _ => {
+        $id(`canvas-frame`).marginLeft = `auto`;
+        $id(`canvas-frame`).marginRight = `0px`;
+    },
+}
 
 const g_imgObj = {};
 
@@ -223,20 +514,6 @@ const C_BLOCK_KEYS = [
 ];
 
 /** 設定・オプション画面用共通 */
-const C_LEN_SETLBL_LEFT = 160;
-const C_LEN_SETLBL_WIDTH = 210;
-const C_LEN_DIFSELECTOR_WIDTH = 250;
-const C_LEN_DIFCOVER_WIDTH = 110;
-const C_LEN_SETLBL_HEIGHT = 23;
-const C_SIZ_SETLBL = 17;
-const C_LEN_SETDIFLBL_HEIGHT = 25;
-const C_SIZ_SETDIFLBL = 17;
-const C_LEN_SETMINI_WIDTH = 40;
-const C_SIZ_SETMINI = 18;
-const C_SIZ_DIFSELECTOR = 14;
-const C_SIZ_MAIN = 14;
-const C_SIZ_MUSIC_TITLE = 13;
-
 const C_LEN_GRAPH_WIDTH = 286;
 const C_LEN_GRAPH_HEIGHT = 226;
 const C_CLR_SPEEDGRAPH_SPEED = `#cc3333`;
@@ -347,9 +624,9 @@ let g_allFrz = 0;
 let g_fullArrows = 0;
 let g_currentArrows = 0;
 const g_rankObj = {
-    rankMarks: [`SS`, `S`, `SA`, `AAA`, `AA`, `A`, `B`, `C`],
-    rankRate: [97, 90, 85, 80, 75, 70, 50, 0],
-    rankColor: [`#00ccff`, `#6600ff`, `#ff9900`, `#ff0000`, `#00ff00`, `#ff00ff`, `#cc00ff`, `#cc9933`],
+    rankMarks: [`SS`, `S`, `SA`, `AAA`, `AA`, `A`, `B`, `C`, `D`],
+    rankRate: [97, 90, 85, 80, 75, 70, 65, 60, 0],
+    rankColor: [`#00ccff`, `#6600ff`, `#ff9900`, `#ff0000`, `#00ff00`, `#ff00ff`, `#cc00ff`, `#cc9933`, `#33cc99`],
 
     rankMarkAllPerfect: `AP`,
     rankColorAllPerfect: ``,
@@ -562,10 +839,6 @@ let g_storeSettings = [`appearance`, `opacity`, `d_stepzone`, `d_judgment`, `d_f
     `d_score`, `d_musicinfo`, `d_filterline`];
 
 let g_canDisabledSettings = [`motion`, `scroll`, `shuffle`, `autoPlay`, `gauge`, `appearance`];
-
-// サイズ(後で指定)
-let g_sWidth;
-let g_sHeight;
 
 const g_hidSudObj = {
     filterPos: 10,
@@ -919,8 +1192,12 @@ const g_shortcutObj = {
         KeyV: { id: `lnkVolumeR` },
 
         KeyI: { id: `btnGraph` },
-        ShiftLeft_KeyQ: { id: `lnkScoreDetailB` },
-        KeyQ: { id: `lnkScoreDetail` },
+        Digit1: { id: `lnkSpeedG` },
+        Digit2: { id: `lnkDensityG` },
+        Digit3: { id: `lnkToolDifG` },
+        Numpad1: { id: `lnkSpeedG` },
+        Numpad2: { id: `lnkDensityG` },
+        Numpad3: { id: `lnkToolDifG` },
         KeyP: { id: `lnkDifInfo` },
         KeyZ: { id: `btnSave` },
 
@@ -938,6 +1215,15 @@ const g_shortcutObj = {
         KeyL: { id: `lnkDifficulty` },
         ArrowDown: { id: `btnDifD` },
         ArrowUp: { id: `btnDifU` },
+
+        KeyI: { id: `btnGraph` },
+        Digit1: { id: `lnkSpeedG` },
+        Digit2: { id: `lnkDensityG` },
+        Digit3: { id: `lnkToolDifG` },
+        Numpad1: { id: `lnkSpeedG` },
+        Numpad2: { id: `lnkDensityG` },
+        Numpad3: { id: `lnkToolDifG` },
+        KeyP: { id: `lnkDifInfo` },
 
         Escape: { id: `btnBack` },
         Space: { id: `btnKeyConfig` },
@@ -1139,6 +1425,7 @@ const g_keyObj = {
     currentPtn: 0,
 
     prevKey: `Dummy`,
+    dfPtnNum: 0,
 
     // キー別ヘッダー
     // - 譜面データ中に出てくる矢印(ノーツ)の種類と順番(ステップゾーン表示順)を管理する。
@@ -2212,8 +2499,16 @@ const g_keyObj = {
         'Left': [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
         'Right': [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
     },
+    assistPos9A_4: {
+        'Left': [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+        'Right': [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+    },
 
     assistPos11i_0: {
+        'Left': [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+        'Right': [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+    },
+    assistPos11i_1: {
         'Left': [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
         'Right': [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
     },
@@ -2231,7 +2526,19 @@ const g_keyObj = {
         'Right': [0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
     },
 
-    dummy: 0	// ダミー(カンマ抜け落ち防止)
+    // 横幅最小値
+    minWidth: 500,
+    minWidthDefault: 600,
+
+    minWidth5: 500,
+    minWidth7i: 550,
+    minWidth9A: 650,
+    minWidth11i: 650,
+    minWidth13: 650,
+    minWidth16i: 650,
+    minWidth17: 800,
+    minWidth23: 900,
+
 };
 
 // デフォルト配列のコピー (g_keyObj.aaa_X から g_keyObj.aaa_Xd を作成)
@@ -2309,90 +2616,100 @@ const g_dfColorObj = {
     setColorInit: [`#6666ff`, `#99ffff`, `#ffffff`, `#ffff99`, `#ff9966`],
     setShadowColorInit: [``, ``, ``, ``, ``],
 
-    setColorType1: [`#6666ff`, `#99ffff`, `#ffffff`, `#ffff99`, `#ff9966`],
-    setColorType2: [`#ffffff`, `#9999ff`, `#99ccff`, `#ffccff`, `#ff9999`],
-    setColorType3: [`#ccccff`, `#ccffff`, `#ffffff`, `#ffffcc`, `#ffcc99`],
-    setColorType4: [`#ffffff`, `#ccccff`, `#99ccff`, `#ffccff`, `#ffcccc`],
-
-    setShadowColorType1: [`#00000080`, `#00000080`, `#00000080`, `#00000080`, `#00000080`],
-    setShadowColorType2: [`#00000080`, `#00000080`, `#00000080`, `#00000080`, `#00000080`],
-    setShadowColorType3: [`#6666ff60`, `#33999960`, `#66666660`, `#99993360`, `#cc663360`],
-    setShadowColorType4: [`#66666660`, `#6666ff60`, `#3366cc60`, `#99339960`, `#99333360`],
-
     // フリーズアロー初期色情報
     frzColorInit: [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
     frzShadowColorInit: [``, ``, ``, ``],
-    frzColorType1: [
-        [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
-        [`#00ffcc`, `#339999`, `#cccc33`, `#999933`],
-        [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
-        [`#cc99ff`, `#9966ff`, `#cccc33`, `#999933`],
-        [`#ff99cc`, `#ff6699`, `#cccc33`, `#999933`]
-    ],
-    frzColorType2: [
-        [`#cccccc`, `#999999`, `#cccc33`, `#999933`],
-        [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
-        [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
-        [`#cc99cc`, `#ff99ff`, `#cccc33`, `#999933`],
-        [`#ff6666`, `#ff9999`, `#cccc33`, `#999933`]
-    ],
-    frzColorType3: [
-        [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
-        [`#00ffcc`, `#339999`, `#cccc33`, `#999933`],
-        [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
-        [`#cc99ff`, `#9966ff`, `#cccc33`, `#999933`],
-        [`#ff99cc`, `#ff6699`, `#cccc33`, `#999933`]
-    ],
-    frzColorType4: [
-        [`#cccccc`, `#999999`, `#cccc33`, `#999933`],
-        [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
-        [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
-        [`#cc99cc`, `#ff99ff`, `#cccc33`, `#999933`],
-        [`#ff6666`, `#ff9999`, `#cccc33`, `#999933`]
-    ],
+
 };
 
-const g_dfColorLightObj = {
-    setColorType1: [`#6666ff`, `#66cccc`, `#000000`, `#999966`, `#cc6600`],
-    setColorType2: [`#000000`, `#6666ff`, `#cc0000`, `#cc99cc`, `#cc3366`],
-    setColorType3: [`#000000`, `#000000`, `#000000`, `#000000`, `#000000`],
-    setColorType4: [`#000000`, `#000000`, `#000000`, `#000000`, `#000000`],
+const g_dfColorBaseObj = {
 
-    setShadowColorType1: [`#ffffff80`, `#ffffff80`, `#ffffff80`, `#ffffff80`, `#ffffff80`],
-    setShadowColorType2: [`#ffffff80`, `#ffffff80`, `#ffffff80`, `#ffffff80`, `#ffffff80`],
-    setShadowColorType3: [`#6666ff80`, `#66cccc80`, `#ffffff80`, `#99996680`, `#cc660080`],
-    setShadowColorType4: [`#00000080`, `#6666ff80`, `#cc000080`, `#cc99cc80`, `#cc336680`],
+    dark: {
+        setColorType1: [`#6666ff`, `#99ffff`, `#ffffff`, `#ffff99`, `#ff9966`],
+        setColorType2: [`#ffffff`, `#9999ff`, `#99ccff`, `#ffccff`, `#ff9999`],
+        setColorType3: [`#ccccff`, `#ccffff`, `#ffffff`, `#ffffcc`, `#ffcc99`],
+        setColorType4: [`#ffffff`, `#ccccff`, `#99ccff`, `#ffccff`, `#ffcccc`],
 
-    frzColorType1: [
-        [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
-        [`#00ffcc`, `#339999`, `#ffff00`, `#999900`],
-        [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
-        [`#cc99ff`, `#9966ff`, `#ffff00`, `#999900`],
-        [`#ff99cc`, `#ff6699`, `#ffff00`, `#999900`]
-    ],
-    frzColorType2: [
-        [`#cccccc`, `#999999`, `#ffff00`, `#999900`],
-        [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
-        [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
-        [`#cc99cc`, `#ff99ff`, `#ffff00`, `#999900`],
-        [`#ff6666`, `#ff9999`, `#ffff00`, `#999900`]
-    ],
-    frzColorType3: [
-        [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
-        [`#00ffcc`, `#339999`, `#ffff00`, `#999900`],
-        [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
-        [`#cc99ff`, `#9966ff`, `#ffff00`, `#999900`],
-        [`#ff99cc`, `#ff6699`, `#ffff00`, `#999900`]
-    ],
-    frzColorType4: [
-        [`#cccccc`, `#999999`, `#ffff00`, `#999900`],
-        [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
-        [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
-        [`#cc99cc`, `#ff99ff`, `#ffff00`, `#999900`],
-        [`#ff6666`, `#ff9999`, `#ffff00`, `#999900`]
-    ],
+        setShadowColorType1: [`#00000080`, `#00000080`, `#00000080`, `#00000080`, `#00000080`],
+        setShadowColorType2: [`#00000080`, `#00000080`, `#00000080`, `#00000080`, `#00000080`],
+        setShadowColorType3: [`#6666ff60`, `#33999960`, `#66666660`, `#99993360`, `#cc663360`],
+        setShadowColorType4: [`#66666660`, `#6666ff60`, `#3366cc60`, `#99339960`, `#99333360`],
+
+        frzColorType1: [
+            [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
+            [`#00ffcc`, `#339999`, `#cccc33`, `#999933`],
+            [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
+            [`#cc99ff`, `#9966ff`, `#cccc33`, `#999933`],
+            [`#ff99cc`, `#ff6699`, `#cccc33`, `#999933`]
+        ],
+        frzColorType2: [
+            [`#cccccc`, `#999999`, `#cccc33`, `#999933`],
+            [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
+            [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
+            [`#cc99cc`, `#ff99ff`, `#cccc33`, `#999933`],
+            [`#ff6666`, `#ff9999`, `#cccc33`, `#999933`]
+        ],
+        frzColorType3: [
+            [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
+            [`#00ffcc`, `#339999`, `#cccc33`, `#999933`],
+            [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
+            [`#cc99ff`, `#9966ff`, `#cccc33`, `#999933`],
+            [`#ff99cc`, `#ff6699`, `#cccc33`, `#999933`]
+        ],
+        frzColorType4: [
+            [`#cccccc`, `#999999`, `#cccc33`, `#999933`],
+            [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
+            [`#66ffff`, `#6600ff`, `#cccc33`, `#999933`],
+            [`#cc99cc`, `#ff99ff`, `#cccc33`, `#999933`],
+            [`#ff6666`, `#ff9999`, `#cccc33`, `#999933`]
+        ],
+    },
+    light: {
+        setColorType1: [`#6666ff`, `#66cccc`, `#000000`, `#999966`, `#cc6600`],
+        setColorType2: [`#000000`, `#6666ff`, `#cc0000`, `#cc99cc`, `#cc3366`],
+        setColorType3: [`#000000`, `#000000`, `#000000`, `#000000`, `#000000`],
+        setColorType4: [`#000000`, `#000000`, `#000000`, `#000000`, `#000000`],
+
+        setShadowColorType1: [`#ffffff80`, `#ffffff80`, `#ffffff80`, `#ffffff80`, `#ffffff80`],
+        setShadowColorType2: [`#ffffff80`, `#ffffff80`, `#ffffff80`, `#ffffff80`, `#ffffff80`],
+        setShadowColorType3: [`#6666ff80`, `#66cccc80`, `#ffffff80`, `#99996680`, `#cc660080`],
+        setShadowColorType4: [`#00000080`, `#6666ff80`, `#cc000080`, `#cc99cc80`, `#cc336680`],
+
+        frzColorType1: [
+            [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
+            [`#00ffcc`, `#339999`, `#ffff00`, `#999900`],
+            [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
+            [`#cc99ff`, `#9966ff`, `#ffff00`, `#999900`],
+            [`#ff99cc`, `#ff6699`, `#ffff00`, `#999900`]
+        ],
+        frzColorType2: [
+            [`#cccccc`, `#999999`, `#ffff00`, `#999900`],
+            [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
+            [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
+            [`#cc99cc`, `#ff99ff`, `#ffff00`, `#999900`],
+            [`#ff6666`, `#ff9999`, `#ffff00`, `#999900`]
+        ],
+        frzColorType3: [
+            [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
+            [`#00ffcc`, `#339999`, `#ffff00`, `#999900`],
+            [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
+            [`#cc99ff`, `#9966ff`, `#ffff00`, `#999900`],
+            [`#ff99cc`, `#ff6699`, `#ffff00`, `#999900`]
+        ],
+        frzColorType4: [
+            [`#cccccc`, `#999999`, `#ffff00`, `#999900`],
+            [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
+            [`#66ffff`, `#6600ff`, `#ffff00`, `#999900`],
+            [`#cc99cc`, `#ff99ff`, `#ffff00`, `#999900`],
+            [`#ff6666`, `#ff9999`, `#ffff00`, `#999900`]
+        ],
+    },
 };
 
+/**
+ * 特殊文字列の置き換えリスト
+ * (置き換え元、置き換え先の組で二次元配列として定義。主にreplaceStr関数で使用)
+ */
 const g_escapeStr = {
     escape: [[`&`, `&amp;`], [`<`, `&lt;`], [`>`, `&gt;`], [`"`, `&quot;`]],
     escapeTag: [
@@ -2406,6 +2723,17 @@ const g_escapeStr = {
     ],
     escapeCode: [
         [`<script>`, ``], [`</script>`, ``],
+    ],
+    musicNameSimple: [
+        [`<br>`, ` `], [`<nbr>`, ``], [`<dbr>`, `　`],
+    ],
+    musicNameMultiLine: [
+        [`<nbr>`, `<br>`], [`<dbr>`, `<br>`],
+    ],
+    frzName: [
+        [`leftdia`, `frzLdia`], [`rightdia`, `frzRdia`],
+        [`left`, `frzLeft`], [`down`, `frzDown`], [`up`, `frzUp`], [`right`, `frzRight`],
+        [`space`, `frzSpace`], [`iyo`, `frzIyo`], [`gor`, `frzGor`], [`oni`, `foni`],
     ],
 };
 
@@ -2809,6 +3137,7 @@ const g_lang_msgObj = {
 
         dataResetConfirm: `この作品のローカル設定をクリアします。よろしいですか？\n(ハイスコアやAdjustment等のデータがクリアされます)`,
         keyResetConfirm: `キーを初期配置に戻します。よろしいですか？`,
+        colorCopyConfirm: `フリーズアローの配色を矢印色に置き換えます\n(通常・ヒット時双方を置き換えます)。よろしいですか？`,
 
         difficulty: `譜面を選択します。`,
         speed: `矢印の流れる速度を設定します。\n外側のボタンは1x単位、内側は0.25x単位で変更できます。`,
@@ -2859,6 +3188,7 @@ const g_lang_msgObj = {
 
         dataResetConfirm: `Delete the local settings in this game. Is it OK?\n(High score, adjustment, volume and some settings will be initialized)`,
         keyResetConfirm: `Resets the assigned key to the initial state. Is it OK?`,
+        colorCopyConfirm: `Replace freeze arrow color scheme with arrow color\n(replace both normal and hit). Is this OK?`,
 
         difficulty: `Select a chart.`,
         speed: `Set the speed of the sequences.\nThe outer button can be changed in 1x increments and the inner button in 0.25x increments.`,
@@ -2920,6 +3250,7 @@ const g_errMsgObj = {
  * - 挿入場所ごとに名前を分けて定義
  */
 const g_customJsObj = {
+    preTitle: [],
     title: [],
     titleEnterFrame: [],
     option: [],
@@ -2962,6 +3293,10 @@ const g_skinJsObj = {
     main: [],
     result: [],
 };
+
+/** 過去関数の互換 */
+const convertreplaceNums = _ => convertReplaceNums();
+const MainInit = _ => mainInit();
 
 /**
  * 従来のカスタム関数をg_customJsObj, g_skinJsObjへ追加

@@ -5,8 +5,8 @@
  * 
  * Source by tickle
  * Created: 2022/01/28
- * Revised: 2022/02/23
- * Source Version: Ver 1.3.1
+ * Revised: 2022/08/15
+ * Source Version: Ver 1.3.2
  * 
  * https://github.com/cwtickle/punching-panels
  */
@@ -21,6 +21,9 @@ g_lblNameObj[`u_key`] = `panel`;
 g_lblNameObj[`u_k-`] = `p-`;
 g_lblNameObj.Reverse = `Dynamic`;
 g_lblNameObj[`u_Reverse`] = `Dynamic`;
+g_lang_msgObj.Ja.reverse = `パネルの移動パターンを変更します。`;
+g_lang_msgObj.En.reverse = `Change the panel movement pattern.`;
+g_rootObj.arrowEffectUse = `false,ON`;
 
 // カスタムキー定義
 g_keyObj.keyName18p = `18`;

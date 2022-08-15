@@ -29,8 +29,7 @@ On the other hand, if you remove the timing *:( Bad*, *:_( Miss* will be, life f
 If the life of the life gauge remains by the end of the game or it is over the quota, the game is cleared.
 
 ## Works / 公開作品
-- [Dancing☆Onigiri サイト一覧](https://cw7.sakura.ne.jp/danonidb/)  
-- [Dancing☆Onigiri 作品一覧](https://cw7.sakura.ne.jp/lst/)  
+- [👊👊👊 Punching◇Panels難易度表 👊👊👊](https://suzme.github.io/punpane/)
 
 ## How to Make / 作り方
 - [本リポジトリWiki](https://github.com/cwtickle/punching-panels/wiki)
@@ -55,9 +54,8 @@ If you would like to cooperate with the development, please see below. Even if y
 
 ## Related Tools Repository / 関連ツール
 - [Dancing☆Onigiri (CW Edition)](https://github.com/cwtickle/danoniplus)
-- [Dancing☆Onigiri エディター(CW Edition 対応)](https://github.com/superkuppabros/danoni-editor) @superkuppabros
+- [Punching◇Panels エディター](https://github.com/suzme/punpane-editor) @suzme
 - [ダンおに曲データjs化ツール](https://github.com/suzme/danoni-base64) @suzme
-- [ダンおに矢印色ツール](https://github.com/suzme/danoni-colorpicker) @suzme
 - [ダンおにゲージ計算機 (Gauge Calculator)](http://www.omission0.com/other/gauge_calculator/) @goe0
 
 ## License / ライセンス
