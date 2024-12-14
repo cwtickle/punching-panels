@@ -10,6 +10,7 @@
  * 
  * https://github.com/cwtickle/punching-panels
  */
+const g_PanpaneVersion = `Ver 1.4.0`;
 
 // 位置の設定、ゲーム名の変更
 const jstyleX = [100, 200, 300, 400, 500, 150, 250, 350, 450, 150, 250, 350, 450, 100, 200, 300, 400, 500];
@@ -25,28 +26,34 @@ g_lang_msgObj.Ja.reverse = `パネルの移動パターンを変更します。`
 g_lang_msgObj.En.reverse = `Change the panel movement pattern.`;
 g_rootObj.arrowEffectUse = `false,ON`;
 
-// カスタムキー定義
-g_keyObj.keyName18p = `18`;
-g_keyObj.chara18p_0 = [`aa`, `ab`, `ac`, `ad`, `ae`, `ba`, `bb`, `bc`, `bd`, `ca`, `cb`, `cc`, `cd`, `da`, `db`, `dc`, `dd`, `de`];
-g_keyObj.chara18p_1 = [`aa`, `ab`, `ac`, `ad`, `ae`, `ba`, `bb`, `bc`, `bd`, `ca`, `cb`, `cc`, `cd`, `da`, `db`, `dc`, `dd`, `de`];
-g_keyObj.color18p_0_0 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 2, 3, 4];
-g_keyObj.color18p_1_0 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 2, 3, 4];
-g_keyObj.shuffle18p_0_0 = [0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3];
-g_keyObj.shuffle18p_0_1 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 2, 3, 4];
-g_keyObj.shuffle18p_0_2 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 4, 3, 1, 0, 4, 3, 2, 1, 0];
-g_keyObj.shuffle18p_1_0 = [0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3];
-g_keyObj.shuffle18p_1_1 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 2, 3, 4];
-g_keyObj.shuffle18p_1_2 = [0, 1, 2, 3, 4, 0, 1, 3, 4, 4, 3, 1, 0, 4, 3, 2, 1, 0];
-g_keyObj.stepRtn18p_0 = [`c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`];
-g_keyObj.stepRtn18p_1 = [`c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`, `c`];
-g_keyObj.pos18p_0 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
-g_keyObj.pos18p_1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
-g_keyObj.keyCtrl18p_0 = [[55, 0], [56, 0], [57, 0], [48, 0], [189, 0], [85, 0], [73, 0], [79, 0], [80, 0], [74, 0], [75, 0], [76, 0], [187, 0], [78, 0], [77, 0], [188, 0], [190, 0], [191, 0]];
-g_keyObj.keyCtrl18p_1 = [[50, 0], [51, 0], [52, 0], [53, 0], [54, 0], [87, 0], [69, 0], [82, 0], [84, 0], [83, 0], [68, 0], [70, 0], [71, 0], [90, 0], [88, 0], [67, 0], [86, 0], [66, 0]];
-g_keyObj.div18p_0 = 18;
-g_keyObj.div18p_1 = 18;
-g_keyObj.minWidth18p = 650;
+/**
+ * タイトル画面の割込み処理
+ */
+function pstyleTitleInit() {
 
+	// キリズマ拡張クレジット
+	multiAppend(divRoot,
+		createCss2Button(`lnkCreditP`, `Punching◇Panels ${g_PanpaneVersion}`, _ => openLink(`https://github.com/cwtickle/punching-panels`), {
+			x: g_sWidth - 175, y: 0, w: 175, h: 20, siz: 12, align: C_ALIGN_RIGHT,
+		}, g_cssObj.button_Setting),
+	);
+}
+g_customJsObj.title.push(pstyleTitleInit);
+
+// カスタムキー定義
+const pstyle18LibData = `
+|keyName18p=18,panel|
+|keyCtrl18p=
+D7,D8,D9,D0,Minus,U,I,O,P,J,K,L,Semicolon,N,M,Comma,Period,Slash
+D2,D3,D4,D5,D6,W,E,R,T,S,D,F,G,Z,X,C,V,B
+|
+|chara18p=aa,ab,ac,ad,ae,ba,bb,bc,bd,ca,cb,cc,cd,da,db,dc,dd,de$18p_0|
+|color18p=0,1,2,3,4,0,1,3,4,0,1,3,4,0,1,2,3,4$18p_0|
+|shuffle18p=0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,3/0,1,2,3,4,0,1,3,4,0,1,3,4,0,1,2,3,4/0,1,2,3,4,0,1,3,4,4,3,1,0,4,3,2,1,0$18p_0|
+|stepRtn18p=c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c$18p_0|
+|minWidth18p=650|
+`;
+g_presetObj.keysDataLib.push(pstyle18LibData);
 g_rootObj.imgType = `panels,svg,true,0`;
 g_rootObj.arrowJdgY = -160;
 
