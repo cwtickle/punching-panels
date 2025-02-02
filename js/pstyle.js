@@ -113,6 +113,15 @@ g_lang_msgObj.Ja.reverse = `パネルの移動パターンを変更します。`
 g_lang_msgObj.En.reverse = `Change the panel movement pattern.`;
 g_rootObj.arrowEffectUse = `false,ON`;
 
+g_customJsObj.preTitle.push(() => {
+
+	// パンパネで起動しない設定を無効化
+	g_headerObj.stepAreaUse = false;
+	g_headerObj.effectUse = false;
+	g_headerObj.camoufrageUse = false;
+	g_headerObj.swappingUse = false;
+});
+
 /**
  * タイトル画面の割込み処理
  */
