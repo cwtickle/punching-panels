@@ -5,12 +5,12 @@
  * 
  * Source by tickle
  * Created: 2022/01/28
- * Revised: 2024/12/14
- * Source Version: Ver 1.5.0
+ * Revised: 2025/02/02
+ * Source Version: Ver 1.5.1
  * 
  * https://github.com/cwtickle/punching-panels
  */
-const g_PanpaneVersion = `Ver 1.5.0`;
+const g_PanpaneVersion = `Ver 1.5.1`;
 
 // 位置の設定、ゲーム名の変更
 const pstyleX = {
@@ -112,6 +112,15 @@ g_lblNameObj[`u_Reverse`] = `Dynamic`;
 g_lang_msgObj.Ja.reverse = `パネルの移動パターンを変更します。`;
 g_lang_msgObj.En.reverse = `Change the panel movement pattern.`;
 g_rootObj.arrowEffectUse = `false,ON`;
+
+g_customJsObj.preTitle.push(() => {
+
+	// パンパネで起動しない設定を無効化
+	g_headerObj.stepAreaUse = false;
+	g_headerObj.effectUse = false;
+	g_headerObj.camoufrageUse = false;
+	g_headerObj.swappingUse = false;
+});
 
 /**
  * タイトル画面の割込み処理
