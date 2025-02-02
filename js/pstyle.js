@@ -5,12 +5,12 @@
  * 
  * Source by tickle
  * Created: 2022/01/28
- * Revised: 2024/12/14
- * Source Version: Ver 1.5.0
+ * Revised: 2025/02/02
+ * Source Version: Ver 1.5.1
  * 
  * https://github.com/cwtickle/punching-panels
  */
-const g_PanpaneVersion = `Ver 1.5.0`;
+const g_PanpaneVersion = `Ver 1.5.1`;
 
 // 位置の設定、ゲーム名の変更
 const pstyleX = {
