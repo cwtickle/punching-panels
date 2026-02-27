@@ -139,6 +139,8 @@ g_customJsObj.title.push(() => {
  */
 g_presetObj.keysDataLib.push(`
 |keyName18p=18,panel|
+|movLock18p=true|
+|initManual18p=true|
 |keyCtrl18p=
 D7,D8,D9,D0,Minus,U,I,O,P,J,K,L,Semicolon,N,M,Comma,Period,Slash
 D2,D3,D4,D5,D6,W,E,R,T,S,D,F,G,Z,X,C,V,B
@@ -150,6 +152,8 @@ D2,D3,D4,D5,D6,W,E,R,T,S,D,F,G,Z,X,C,V,B
 |minWidth18p=650|
 
 |keyName36p=36,panel|
+|movLock36p=true|
+|initManual36p=true|
 |keyCtrl36p=
 D2,D3,D4,D5,D6,D7,D8,D9,D0,Minus,W,E,R,T,U,I,O,P,S,D,F,G,J,K,L,Semicolon,Z,X,C,V,B,N,M,Comma,Period,Slash
 D1,D2,D3,D4,D5,D7,D8,D9,D0,Minus,Q,W,E,R,U,I,O,P,A,S,D,F,J,K,L,Semicolon,ShiftLeft,Z,X,C,V,N,M,Comma,Period,Slash
