@@ -148,6 +148,14 @@ g_customJsObj.preTitle.push(() => {
 		}];
 		const panelsImgTypeNames = [`panels`];
 
+		// file://実行時はupdateImgType()自体が無効化されているため、
+		// C_IMG_AASD / C_IMG_C だけ手動で差し替える（./js/lib/danoni_localbinary.js は標準版のまま使う）
+		const origLocalImg = { C_IMG_AASD, C_IMG_C };
+		const panelLocalImg = {
+			C_IMG_AASD: `data:image/svg+xml,${encodeURIComponent('<svg id="aaShadow" data-name="aaShadow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><defs><style>.cls-1{stroke:#000;stroke-miterlimit:10;}</style></defs><polygon class="cls-1" points="177.5 25.5 49.5 180.5 6.5 274.5 -0.5 347.5 13.5 416.5 82 500 410.85 499 479.85 418 500 332 480 250 438 162 333 25 177.5 25.5"/></svg>')}`,
+			C_IMG_C: `data:image/svg+xml,${encodeURIComponent('<svg id="c" data-name="c" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path d="M495,5V495H5V5H495m5-5H0V500H500V0Z"/></svg>')}`,
+		};
+
 		// 現在選択中のkeyLabelに応じて都度切り替える
 		g_customJsObj.difficulty.push(() => {
 			if (!isPanelKey(g_keyObj.prevKey) && isPanelKey(g_keyObj.currentKey)) {
@@ -180,7 +188,16 @@ g_customJsObj.preTitle.push(() => {
 					g_imgType = `panels`;
 					g_stateObj.rotateEnabled = panelsImgTypeArr[0].rotateEnabled;
 					g_stateObj.flatStepHeight = panelsImgTypeArr[0].flatStepHeight;
-					updateImgType(panelsImgTypeArr[0]);
+
+					if (g_isFile) {
+						// file://実行時: 差分のある2画像だけ手動で切替
+						C_IMG_AASD = panelLocalImg.C_IMG_AASD;
+						C_IMG_C = panelLocalImg.C_IMG_C;
+						g_imgObj.cShadow = C_IMG_AASD;
+						g_imgObj.c = C_IMG_C;
+					} else {
+						updateImgType(panelsImgTypeArr[0]);
+					}
 				}
 			} else if (isPanelKey(g_keyObj.prevKey) && isStandardKey(g_keyObj.currentKey)) {
 
@@ -212,7 +229,15 @@ g_customJsObj.preTitle.push(() => {
 					g_imgType = origImgTypeNames[0];
 					g_stateObj.rotateEnabled = origImgTypeArr[0].rotateEnabled;
 					g_stateObj.flatStepHeight = origImgTypeArr[0].flatStepHeight;
-					updateImgType(origImgTypeArr[0]);
+
+					if (g_isFile) {
+						C_IMG_AASD = origLocalImg.C_IMG_AASD;
+						C_IMG_C = origLocalImg.C_IMG_C;
+						g_imgObj.cShadow = C_IMG_AASD;
+						g_imgObj.c = C_IMG_C;
+					} else {
+						updateImgType(origImgTypeArr[0]);
+					}
 				}
 			}
 		});
