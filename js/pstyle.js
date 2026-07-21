@@ -12,37 +12,48 @@
  */
 const g_PanpaneVersion = `Ver 1.6.0`;
 
-// 位置の設定、ゲーム名の変更
-const pstyleX = {
-	'18p': [
-		100, 200, 300, 400, 500,
-		150, 250, 350, 450,
-		150, 250, 350, 450,
-		100, 200, 300, 400, 500,
-	],
-	'36p': [
-		100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
-		150, 250, 350, 450, 650, 750, 850, 950,
-		150, 250, 350, 450, 650, 750, 850, 950,
-		100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
-	],
-};
-const pstyleY = {
-	'18p': [
-		110, 110, 110, 110, 110,
-		170, 170, 170, 170,
-		230, 230, 230, 230,
-		290, 290, 290, 290, 290,
-	],
-	'36p': [
-		110, 110, 110, 110, 110, 110, 110, 110, 110, 110,
-		170, 170, 170, 170, 170, 170, 170, 170,
-		230, 230, 230, 230, 230, 230, 230, 230,
-		290, 290, 290, 290, 290, 290, 290, 290, 290, 290,
-	],
-};
-const pMotion = {
-	'18p': `
+g_customJsObj.preTitle.push(() => {
+
+	// 他系統(Kirizma等)と共存できるよう、「panel系以外」ではなく「本当に標準に戻った」場合だけ復元する
+	const isPanelKey = key => [`18p`, `36p`].includes(key);
+	const isKirizmaKey = key => key.endsWith(`k`);
+	const isSpecialKey = key =>
+		(hasVal(g_rootObj.specialKey) ? g_rootObj.specialKey.split(`,`) : []).concat([`9t`]).includes(key);
+	const isStandardKey = key => !isPanelKey(key) && !isKirizmaKey(key) && !isSpecialKey(key);
+
+	if (g_headerObj.keyLists.some(isPanelKey)) {
+
+		// 位置の設定、ゲーム名の変更
+		const pstyleX = {
+			'18p': [
+				100, 200, 300, 400, 500,
+				150, 250, 350, 450,
+				150, 250, 350, 450,
+				100, 200, 300, 400, 500,
+			],
+			'36p': [
+				100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
+				150, 250, 350, 450, 650, 750, 850, 950,
+				150, 250, 350, 450, 650, 750, 850, 950,
+				100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
+			],
+		};
+		const pstyleY = {
+			'18p': [
+				110, 110, 110, 110, 110,
+				170, 170, 170, 170,
+				230, 230, 230, 230,
+				290, 290, 290, 290, 290,
+			],
+			'36p': [
+				110, 110, 110, 110, 110, 110, 110, 110, 110, 110,
+				170, 170, 170, 170, 170, 170, 170, 170,
+				230, 230, 230, 230, 230, 230, 230, 230,
+				290, 290, 290, 290, 290, 290, 290, 290, 290, 290,
+			],
+		};
+		const pMotion = {
+			'18p': `
 0,0,j11_org,j11
 0,1,j12_org,j12
 0,2,j13_org,j13
@@ -62,7 +73,7 @@ const pMotion = {
 0,16,j44_org,j44
 0,17,j45_org,j45
 	`,
-	'36p': `
+			'36p': `
 0,0,j11_org,j11
 0,1,j12_org,j12
 0,2,j13_org,j13
@@ -100,38 +111,152 @@ const pMotion = {
 0,1034,j49_org,j49
 0,1035,j4a_org,j4a
 	`,
-};
+		};
 
-g_lblNameObj.dancing = `PUNCHING`;
-g_lblNameObj.star = `◇`;
-g_lblNameObj.onigiri = `PANELS`;
-g_lblNameObj[`u_key`] = `panel`;
-g_lblNameObj[`u_k-`] = `p-`;
-g_lblNameObj.Reverse = `Dynamic`;
-g_lblNameObj[`u_Reverse`] = `Dynamic`;
-g_lang_msgObj.Ja.reverse = `パネルの移動パターンを変更します。`;
-g_lang_msgObj.En.reverse = `Change the panel movement pattern.`;
-g_rootObj.arrowEffectUse = `false,ON`;
+		// タイトルロゴ・ラベル文言は「全difficultyがpanel系keyLabelの場合のみ」書き換える
+		if (g_headerObj.keyLists.every(isPanelKey)) {
+			g_lblNameObj.dancing = `PUNCHING`;
+			g_lblNameObj.star = `◇`;
+			g_lblNameObj.onigiri = `PANELS`;
+		}
 
-g_customJsObj.preTitle.push(() => {
+		// 標準側の元の値を退避
+		const origArrowEffectUseOrg = g_headerObj.arrowEffectUseOrg;
+		const origDArrowEffect = g_stateObj.d_arroweffect;
+		const origStepAreaUse = g_headerObj.stepAreaUse;
+		const origEffectUse = g_headerObj.effectUse;
+		const origCamoufrageUse = g_headerObj.camoufrageUse;
+		const origSwappingUse = g_headerObj.swappingUse;
+		const origArrowJdgY = g_diffObj.arrowJdgY;
 
-	// パンパネで起動しない設定を無効化
-	g_headerObj.stepAreaUse = false;
-	g_headerObj.effectUse = false;
-	g_headerObj.camoufrageUse = false;
-	g_headerObj.swappingUse = false;
-});
+		// ラベル文言も標準側を退避
+		const origLblUKey = g_lblNameObj[`u_key`];
+		const origLblUKMinus = g_lblNameObj[`u_k-`];
+		const origLblReverse = g_lblNameObj.Reverse;
+		const origLblUReverse = g_lblNameObj[`u_Reverse`];
+		const origMsgReverse = g_msgObj.reverse;
 
-/**
- * タイトル画面の割込み処理
- */
-g_customJsObj.title.push(() => {
-	// 拡張クレジット
-	multiAppend(divRoot,
-		createCss2Button(`lnkCreditP`, `Punching◇Panels ${g_PanpaneVersion}`, _ => openLink(`https://github.com/cwtickle/punching-panels`), {
-			x: g_btnWidth() + g_btnX() - 175, y: 0, w: 175, h: 20, siz: 12, align: C_ALIGN_RIGHT,
-		}, g_cssObj.button_Setting),
-	);
+		const panelReverseMsg = { Ja: `パネルの移動パターンを変更します。`, En: `Change the panel movement pattern.` };
+
+		// 標準側は core が既に解析した内容をそのまま退避
+		const origImgTypeArr = g_headerObj.imgType;
+		const origImgTypeNames = g_keycons.imgTypes;
+
+		// panels専用の画像セットは core の解析ルートを一切通さず、ここだけで完結させる
+		const panelsImgTypeArr = [{
+			name: `panels`, extension: `svg`, rotateEnabled: true, flatStepHeight: 0, remoteDir: ``,
+		}];
+		const panelsImgTypeNames = [`panels`];
+
+		// 現在選択中のkeyLabelに応じて都度切り替える
+		g_customJsObj.difficulty.push(() => {
+			if (!isPanelKey(g_keyObj.prevKey) && isPanelKey(g_keyObj.currentKey)) {
+
+				// パンパネで起動しない設定を無効化
+				g_headerObj.arrowEffectUse = false;
+				g_stateObj.d_arroweffect = C_FLG_ON;
+				g_headerObj.stepAreaUse = false;
+				g_headerObj.effectUse = false;
+				g_headerObj.camoufrageUse = false;
+				g_headerObj.swappingUse = false;
+
+				g_diffObj.arrowJdgY = -160;
+
+				// ラベル文言をpanel用に切替
+				g_lblNameObj[`u_key`] = `panel`;
+				g_lblNameObj[`u_k-`] = `p-`;
+				g_lblNameObj.Reverse = `Dynamic`;
+				g_lblNameObj[`u_Reverse`] = `Dynamic`;
+				g_msgObj.reverse = panelReverseMsg[g_localeObj.val] ?? panelReverseMsg.Ja;
+				lblReverse.innerText = g_lblNameObj.Reverse;
+				btnReverse.innerText = btnReverse.innerText.split(origLblReverse).join(`Dynamic`);
+				lblReverse.title = g_msgObj.reverse;
+				lnkDifficulty.innerText = lnkDifficulty.innerText.split(origLblUKey).join(`panel`);
+
+				g_headerObj.imgType = panelsImgTypeArr;
+				g_keycons.imgTypes = panelsImgTypeNames;
+
+				if (g_imgType !== `panels`) {
+					g_imgType = `panels`;
+					g_stateObj.rotateEnabled = panelsImgTypeArr[0].rotateEnabled;
+					g_stateObj.flatStepHeight = panelsImgTypeArr[0].flatStepHeight;
+					updateImgType(panelsImgTypeArr[0]);
+				}
+			} else if (isPanelKey(g_keyObj.prevKey) && isStandardKey(g_keyObj.currentKey)) {
+
+				// 標準側は元の値に戻す
+				g_headerObj.arrowEffectUse = origArrowEffectUseOrg;
+				g_stateObj.d_arroweffect = origDArrowEffect;
+				g_headerObj.stepAreaUse = origStepAreaUse;
+				g_headerObj.effectUse = origEffectUse;
+				g_headerObj.camoufrageUse = origCamoufrageUse;
+				g_headerObj.swappingUse = origSwappingUse;
+
+				g_diffObj.arrowJdgY = origArrowJdgY;
+
+				g_headerObj.imgType = origImgTypeArr;
+				g_keycons.imgTypes = origImgTypeNames;
+
+				// ラベル文言を標準に戻す
+				g_lblNameObj[`u_key`] = origLblUKey;
+				g_lblNameObj[`u_k-`] = origLblUKMinus;
+				g_lblNameObj.Reverse = origLblReverse;
+				g_lblNameObj[`u_Reverse`] = origLblUReverse;
+				g_msgObj.reverse = origMsgReverse;
+				lblReverse.innerText = g_lblNameObj.Reverse;
+				btnReverse.innerText = btnReverse.innerText.split(`Dynamic`).join(origLblReverse);
+				lblReverse.title = g_msgObj.reverse;
+				lnkDifficulty.innerText = lnkDifficulty.innerText.split(`panel`).join(origLblUKey);
+
+				if (g_imgType !== origImgTypeNames[0]) {
+					g_imgType = origImgTypeNames[0];
+					g_stateObj.rotateEnabled = origImgTypeArr[0].rotateEnabled;
+					g_stateObj.flatStepHeight = origImgTypeArr[0].flatStepHeight;
+					updateImgType(origImgTypeArr[0]);
+				}
+			}
+		});
+
+		/**
+		 * タイトル画面の割込み処理
+		 */
+		g_customJsObj.title.push(() => {
+			// 拡張クレジット
+			multiAppend(divRoot,
+				createCss2Button(`lnkCreditP`, `Punching◇Panels ${g_PanpaneVersion}`, _ => openLink(`https://github.com/cwtickle/punching-panels`), {
+					x: g_btnWidth() + g_btnX() - 175, y: 0, w: 175, h: 20, siz: 12, align: C_ALIGN_RIGHT,
+				}, g_cssObj.button_Setting),
+			);
+		});
+
+		// デフォルト配列のコピー (g_keyObj.aaa_X から g_keyObj.aaa_Xd を作成)
+		const keyCtrlNameP = Object.keys(g_keyObj).filter(val => val.startsWith(`keyCtrl18p`) || val.startsWith(`keyCtrl36p`));
+		keyCtrlNameP.forEach(property => g_keyObj[`${property}d`] = copyArray2d(g_keyObj[property]));
+
+		[`color18p`, `shuffle18p`, `color36p`, `shuffle36p`].forEach(type => {
+			const tmpName = Object.keys(g_keyObj).filter(val => val.startsWith(type) && val.endsWith(`_0`));
+			tmpName.forEach(property => g_keyObj[`${property.slice(0, -2)}`] = g_keyObj[property].concat());
+		});
+
+		// 矢印モーション初期定義
+		g_customJsObj.preloading.push(() => {
+			g_rootObj.arrowMotion_data = isPanelKey(g_keyObj.currentKey)
+				? pMotion[g_keyObj.currentKey]
+				: undefined;
+		});
+
+		// ステップゾーンの位置変更 (ノーツはCSS側で制御)
+		g_customJsObj.main.push(() => {
+			if ([`18p`, `36p`].includes(g_keyObj.currentKey)) {
+				for (let i = 0; i < g_keyObj[`keyCtrl${g_keyObj.currentKey}_0`].length; i++) {
+					if (document.getElementById(`stepRoot${i}`)) {
+						document.getElementById(`stepRoot${i}`).style.left = `${pstyleX[g_keyObj.currentKey][i]}px`;
+						document.getElementById(`stepRoot${i}`).style.top = `${pstyleY[g_keyObj.currentKey][i]}px`;
+					}
+				}
+			}
+		});
+	}
 });
 
 /**
@@ -164,34 +289,6 @@ D1,D2,D3,D4,D5,D7,D8,D9,D0,Minus,Q,W,E,R,U,I,O,P,A,S,D,F,J,K,L,Semicolon,ShiftLe
 |stepRtn36p=c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c,c$36p_0|
 |minWidth36p=1200|
 `);
-g_rootObj.imgType = `panels,svg,true,0`;
-g_rootObj.arrowJdgY = -160;
-
-// デフォルト配列のコピー (g_keyObj.aaa_X から g_keyObj.aaa_Xd を作成)
-const keyCtrlNameP = Object.keys(g_keyObj).filter(val => val.startsWith(`keyCtrl18p`) || val.startsWith(`keyCtrl36p`));
-keyCtrlNameP.forEach(property => g_keyObj[`${property}d`] = copyArray2d(g_keyObj[property]));
-
-[`color18p`, `shuffle18p`, `color36p`, `shuffle36p`].forEach(type => {
-	const tmpName = Object.keys(g_keyObj).filter(val => val.startsWith(type) && val.endsWith(`_0`));
-	tmpName.forEach(property => g_keyObj[`${property.slice(0, -2)}`] = g_keyObj[property].concat());
-});
-
-// 矢印モーション初期定義
-g_customJsObj.preloading.push(() => {
-	g_rootObj.arrowMotion_data = pMotion[g_keyObj.currentKey];
-});
-
-// ステップゾーンの位置変更 (ノーツはCSS側で制御)
-g_customJsObj.main.push(() => {
-	if ([`18p`, `36p`].includes(g_keyObj.currentKey)) {
-		for (let i = 0; i < g_keyObj[`keyCtrl${g_keyObj.currentKey}_0`].length; i++) {
-			if (document.getElementById(`stepRoot${i}`)) {
-				document.getElementById(`stepRoot${i}`).style.left = `${pstyleX[g_keyObj.currentKey][i]}px`;
-				document.getElementById(`stepRoot${i}`).style.top = `${pstyleY[g_keyObj.currentKey][i]}px`;
-			}
-		}
-	}
-});
 
 // ライセンス原文、以下は削除しないでください
 /*-----------------------------------------------------------*/
