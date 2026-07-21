@@ -195,6 +195,9 @@ g_customJsObj.preTitle.push(() => {
 						C_IMG_C = panelLocalImg.C_IMG_C;
 						g_imgObj.cShadow = C_IMG_AASD;
 						g_imgObj.c = C_IMG_C;
+						g_imgObj.cStep = C_IMG_C;
+						g_imgObj.cShadowStep = C_IMG_AASD;
+						g_imgObj.cStepHit = C_IMG_C;
 					} else {
 						updateImgType(panelsImgTypeArr[0]);
 					}
@@ -235,6 +238,9 @@ g_customJsObj.preTitle.push(() => {
 						C_IMG_C = origLocalImg.C_IMG_C;
 						g_imgObj.cShadow = C_IMG_AASD;
 						g_imgObj.c = C_IMG_C;
+						g_imgObj.cStep = C_IMG_C;
+						g_imgObj.cShadowStep = C_IMG_AASD;
+						g_imgObj.cStepHit = C_IMG_C;
 					} else {
 						updateImgType(origImgTypeArr[0]);
 					}
