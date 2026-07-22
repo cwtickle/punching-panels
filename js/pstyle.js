@@ -155,6 +155,8 @@ g_customJsObj.preTitle.push(() => {
 			C_IMG_C: `data:image/svg+xml,${encodeURIComponent('<svg id="c" data-name="c" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path d="M495,5V495H5V5H495m5-5H0V500H500V0Z"/></svg>')}`,
 		};
 
+		const orgHashTag = g_headerObj.hashTag;
+
 		// 現在選択中のkeyLabelに応じて都度切り替える
 		g_customJsObj.difficulty.push(() => {
 			if (!isPanelKey(g_keyObj.prevKey) && isPanelKey(g_keyObj.currentKey)) {
@@ -180,6 +182,14 @@ g_customJsObj.preTitle.push(() => {
 				g_headerObj.imgType = panelsImgTypeArr;
 				g_keycons.imgTypes = panelsImgTypeNames;
 
+				if (hasVal(orgHashTag)) {
+					if (!orgHashTag.includes(`#punpane`)) {
+						g_headerObj.hashTag = orgHashTag + ` #punpane`;
+					}
+				} else {
+					g_headerObj.hashTag = `#punpane`;
+				}
+
 				if (g_imgType !== `panels`) {
 					g_imgType = `panels`;
 					g_stateObj.rotateEnabled = panelsImgTypeArr[0].rotateEnabled;
@@ -204,6 +214,12 @@ g_customJsObj.preTitle.push(() => {
 
 				g_headerObj.imgType = origImgTypeArr;
 				g_keycons.imgTypes = origImgTypeNames;
+
+				if (hasVal(orgHashTag)) {
+					g_headerObj.hashTag = orgHashTag;
+				} else {
+					delete g_headerObj.hashTag;
+				}
 
 				if (g_imgType !== origImgTypeNames[0]) {
 					g_imgType = origImgTypeNames[0];
