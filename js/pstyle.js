@@ -180,19 +180,6 @@ g_customJsObj.preTitle.push(() => {
 				g_headerObj.imgType = panelsImgTypeArr;
 				g_keycons.imgTypes = panelsImgTypeNames;
 
-				const panelDesignWidth = g_keyObj[`minWidth${g_keyObj.currentKey}`];
-				const panelOffsetX = (g_sWidth - panelDesignWidth) / 2;
-				document.documentElement.style.setProperty(`--panel-offset-x`, `${panelOffsetX}px`);
-
-				// パンパネクレジット
-				if (!g_headerObj.keyLists.every(isPanelKey)) {
-					multiAppend(divRoot,
-						createCss2Button(`lnkCreditP`, `Punching◇Panels ${g_PanpaneVersion}`, _ => openLink(`https://github.com/cwtickle/punching-panels`), {
-							x: g_btnX(), y: 30, w: g_btnWidth(1 / 4), h: 20, siz: 12,
-						}, g_cssObj.button_Setting),
-					);
-				}
-
 				if (g_imgType !== `panels`) {
 					g_imgType = `panels`;
 					g_stateObj.rotateEnabled = panelsImgTypeArr[0].rotateEnabled;
@@ -213,20 +200,10 @@ g_customJsObj.preTitle.push(() => {
 				}
 			} else if (isPanelKey(g_keyObj.prevKey) && isStandardKey(g_keyObj.currentKey)) {
 
-				// 標準側は元の値に戻す
-				g_headerObj.arrowEffectUse = origArrowEffectUseOrg;
-				g_stateObj.d_arroweffect = origDArrowEffect;
-				g_headerObj.stepAreaUse = origStepAreaUse;
-				g_headerObj.effectUse = origEffectUse;
-				g_headerObj.camoufrageUse = origCamoufrageUse;
-				g_headerObj.swappingUse = origSwappingUse;
-
 				g_diffObj.arrowJdgY = origArrowJdgY;
 
 				g_headerObj.imgType = origImgTypeArr;
 				g_keycons.imgTypes = origImgTypeNames;
-
-				document.documentElement.style.setProperty(`--panel-offset-x`, `0px`);
 
 				if (g_imgType !== origImgTypeNames[0]) {
 					g_imgType = origImgTypeNames[0];
@@ -256,7 +233,39 @@ g_customJsObj.preTitle.push(() => {
 				lblReverse.innerText = origLblReverse;
 				btnReverse.innerText = `${origLblReverse}:${getStgDetailName(g_stateObj.reverse)}`;
 				lblReverse.title = origMsgReverse;
+
+				g_headerObj.arrowEffectUse = origArrowEffectUseOrg;
+				g_stateObj.d_arroweffect = origDArrowEffect;
+				g_headerObj.stepAreaUse = origStepAreaUse;
+				g_headerObj.effectUse = origEffectUse;
+				g_headerObj.camoufrageUse = origCamoufrageUse;
+				g_headerObj.swappingUse = origSwappingUse;
 				deleteDiv(divRoot, `lnkCreditP`);
+			}
+
+			// オフセットは18p<->36pの切替でも変わるため、系統の出入り判定とは無関係に、
+			// panels選択中は常に(現在のkeyLabelに応じて)再計算し続ける
+			if (isPanelKey(g_keyObj.currentKey)) {
+				if (g_stateObj.playWindow.endsWith(`SideScroll`)) {
+					document.documentElement.style.setProperty(`--panel-offset-x`, `0px`);
+				} else {
+					const panelOffsetX = (g_sWidth - g_keyObj[`minWidth${g_keyObj.currentKey}`]) / 2;
+					document.documentElement.style.setProperty(`--panel-offset-x`, `${panelOffsetX}px`);
+				}
+
+				// パンパネクレジット
+				if (!g_headerObj.keyLists.every(isPanelKey)) {
+					if (document.getElementById(`lnkCreditP`) === null) {
+						multiAppend(divRoot,
+							createCss2Button(`lnkCreditP`, `Punching◇Panels ${g_PanpaneVersion}`, _ => openLink(`https://github.com/cwtickle/punching-panels`), {
+								x: g_btnX(), y: 30, w: g_btnWidth(1 / 4), h: 20, siz: 12,
+							}, g_cssObj.button_Setting),
+						);
+					}
+				}
+			} else if (isPanelKey(g_keyObj.prevKey)) {
+				// panelsから離れた瞬間だけ0に戻す(以後は他系統なので触らない)
+				document.documentElement.style.setProperty(`--panel-offset-x`, `0px`);
 			}
 		});
 
@@ -289,9 +298,18 @@ g_customJsObj.preTitle.push(() => {
 				: undefined;
 		});
 
+		// SideScroll時のスケール調整
+		g_customJsObj.loading.push(() => {
+			if (isPanelKey(g_keyObj.currentKey)) {
+				if (g_stateObj.playWindow.endsWith(`SideScroll`)) {
+					g_workObj.scale = Math.min(g_sHeight / g_keyObj[`minWidth${g_keyObj.currentKey}`], 1);
+				}
+			}
+		});
+
 		// ステップゾーンの位置変更 (ノーツはCSS側で制御)
 		g_customJsObj.main.push(() => {
-			if ([`18p`, `36p`].includes(g_keyObj.currentKey)) {
+			if (isPanelKey(g_keyObj.currentKey)) {
 				const panelOffsetX = (g_sWidth - g_keyObj[`minWidth${g_keyObj.currentKey}`]) / 2;
 				for (let i = 0; i < g_keyObj[`keyCtrl${g_keyObj.currentKey}_0`].length; i++) {
 					if (document.getElementById(`stepRoot${i}`)) {
