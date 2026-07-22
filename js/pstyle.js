@@ -18,7 +18,8 @@ g_customJsObj.preTitle.push(() => {
 	const isPanelKey = key => [`18p`, `36p`].includes(key);
 	const isKirizmaKey = key => key.endsWith(`k`);
 	const isSpecialKey = key =>
-		(hasVal(g_rootObj.specialKey) ? g_rootObj.specialKey.split(`,`) : []).concat([`9t`]).includes(key);
+		(hasVal(g_rootObj.specialKey) ? g_rootObj.specialKey.split(`,`) : []).concat([`9t`, `18t`]).includes(key);
+	const isDynamicKey = key => [`18p`, `36p`, `9t`, `18t`].includes(key);
 	const isStandardKey = key => !isPanelKey(key) && !isKirizmaKey(key) && !isSpecialKey(key);
 
 	if (g_headerObj.keyLists.some(isPanelKey)) {
@@ -130,8 +131,6 @@ g_customJsObj.preTitle.push(() => {
 		const origArrowJdgY = g_diffObj.arrowJdgY;
 
 		// ラベル文言も標準側を退避
-		const origLblUKey = g_lblNameObj[`u_key`];
-		const origLblUKMinus = g_lblNameObj[`u_k-`];
 		const origLblReverse = g_lblNameObj.Reverse;
 		const origLblUReverse = g_lblNameObj[`u_Reverse`];
 		const origMsgReverse = g_msgObj.reverse;
@@ -171,15 +170,12 @@ g_customJsObj.preTitle.push(() => {
 				g_diffObj.arrowJdgY = -160;
 
 				// ラベル文言をpanel用に切替
-				g_lblNameObj[`u_key`] = `panel`;
-				g_lblNameObj[`u_k-`] = `p-`;
 				g_lblNameObj.Reverse = `Dynamic`;
 				g_lblNameObj[`u_Reverse`] = `Dynamic`;
 				g_msgObj.reverse = panelReverseMsg[g_localeObj.val] ?? panelReverseMsg.Ja;
-				lblReverse.innerText = g_lblNameObj.Reverse;
-				btnReverse.innerText = btnReverse.innerText.split(origLblReverse).join(`Dynamic`);
+				lblReverse.innerText = `Dynamic`;
+				btnReverse.innerText = `Dynamic:${getStgDetailName(g_stateObj.reverse)}`;
 				lblReverse.title = g_msgObj.reverse;
-				lnkDifficulty.innerText = lnkDifficulty.innerText.split(origLblUKey).join(`panel`);
 
 				g_headerObj.imgType = panelsImgTypeArr;
 				g_keycons.imgTypes = panelsImgTypeNames;
@@ -217,17 +213,6 @@ g_customJsObj.preTitle.push(() => {
 				g_headerObj.imgType = origImgTypeArr;
 				g_keycons.imgTypes = origImgTypeNames;
 
-				// ラベル文言を標準に戻す
-				g_lblNameObj[`u_key`] = origLblUKey;
-				g_lblNameObj[`u_k-`] = origLblUKMinus;
-				g_lblNameObj.Reverse = origLblReverse;
-				g_lblNameObj[`u_Reverse`] = origLblUReverse;
-				g_msgObj.reverse = origMsgReverse;
-				lblReverse.innerText = g_lblNameObj.Reverse;
-				btnReverse.innerText = btnReverse.innerText.split(`Dynamic`).join(origLblReverse);
-				lblReverse.title = g_msgObj.reverse;
-				lnkDifficulty.innerText = lnkDifficulty.innerText.split(`panel`).join(origLblUKey);
-
 				if (g_imgType !== origImgTypeNames[0]) {
 					g_imgType = origImgTypeNames[0];
 					g_stateObj.rotateEnabled = origImgTypeArr[0].rotateEnabled;
@@ -246,6 +231,17 @@ g_customJsObj.preTitle.push(() => {
 					}
 				}
 			}
+
+			// Reverseラベルはpstyle専有のフィールドなので、panelsを離れたら
+			// 遷移先(標準/kirizma問わず)に関係なく必ず復元する
+			if (isDynamicKey(g_keyObj.prevKey) && !isDynamicKey(g_keyObj.currentKey)) {
+				g_lblNameObj.Reverse = origLblReverse;
+				g_lblNameObj[`u_Reverse`] = origLblUReverse;
+				g_msgObj.reverse = origMsgReverse;
+				lblReverse.innerText = origLblReverse;
+				btnReverse.innerText = `${origLblReverse}:${getStgDetailName(g_stateObj.reverse)}`;
+				lblReverse.title = origMsgReverse;
+			}
 		});
 
 		/**
@@ -255,7 +251,8 @@ g_customJsObj.preTitle.push(() => {
 			// 拡張クレジット
 			multiAppend(divRoot,
 				createCss2Button(`lnkCreditP`, `Punching◇Panels ${g_PanpaneVersion}`, _ => openLink(`https://github.com/cwtickle/punching-panels`), {
-					x: g_btnWidth() + g_btnX() - 175, y: 0, w: 175, h: 20, siz: 12, align: C_ALIGN_RIGHT,
+					x: g_btnWidth() + g_btnX() - 175, y: g_headerObj.keyLists.some(isKirizmaKey) ? 20 : 0,
+					w: 175, h: 20, siz: 12, align: C_ALIGN_RIGHT,
 				}, g_cssObj.button_Setting),
 			);
 		});
