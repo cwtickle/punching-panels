@@ -1,7 +1,7 @@
 ﻿@charset "UTF-8";
 /* ----------------------------------------
   Punching◇Panels
-  カスタムcssファイル
+  カスタムcssファイル (18p/36p 統合版)
 
   Created : 2022/01/28
   Revised : 
@@ -13,846 +13,875 @@ div[id^="stepHit"] {
   top: -10px !important;
 }
 
-.j11, .j12, .j13, .j14, .j15, .j21, .j22, .j23, .j24, .j31, .j32, .j33, .j34, .j41, .j42, .j43, .j44, .j45 {
+@keyframes motionArrow {
+  0% {
+    left: calc(var(--from-x) + var(--panel-offset-x, 0px));
+    top: var(--from-y);
+    width: 50px;
+    height: 0px;
+    background: #ffffff;
+  }
+
+  100% {
+    left: calc(var(--to-x) + var(--panel-offset-x, 0px));
+    top: var(--to-y);
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@keyframes motionArrowOrg {
+  0% {
+    left: var(--from-x);
+    top: var(--from-y);
+    width: 50px;
+    height: 0px;
+  }
+
+  100% {
+    left: var(--to-x);
+    top: var(--to-y);
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.j11,
+.j12,
+.j13,
+.j14,
+.j15,
+.j21,
+.j22,
+.j23,
+.j24,
+.j31,
+.j32,
+.j33,
+.j34,
+.j41,
+.j42,
+.j43,
+.j44,
+.j45,
+.j16,
+.j17,
+.j18,
+.j19,
+.j1a,
+.j26,
+.j27,
+.j28,
+.j29,
+.j36,
+.j37,
+.j38,
+.j39,
+.j46,
+.j47,
+.j48,
+.j49,
+.j4a {
   animation-timing-function: linear, step-end;
   animation-fill-mode: forwards;
 }
 
-.j11, .j21, .j31, .j41 {
+.j11,
+.j21,
+.j31,
+.j41,
+.j16,
+.j26,
+.j36,
+.j46 {
   border: 2px solid #6666ff;
   background: #000066;
 }
 
-.j12, .j22, .j32, .j42 {
+.j12,
+.j22,
+.j32,
+.j42,
+.j17,
+.j27,
+.j37,
+.j47 {
   border: 2px solid #66ffff;
   background: #003333;
 }
 
-.j13, .j43 {
+.j13,
+.j43,
+.j18,
+.j48 {
   border: 2px solid #ffffff;
   background: #333333;
 }
 
-.j14, .j23, .j33, .j44 {
+.j14,
+.j23,
+.j33,
+.j44,
+.j19,
+.j28,
+.j38,
+.j49 {
   border: 2px solid #ffff66;
   background: #333300;
 }
 
-.j15, .j24, .j34, .j45 {
+.j15,
+.j24,
+.j34,
+.j45,
+.j1a,
+.j29,
+.j39,
+.j4a {
   border: 2px solid #ff9966;
   background: #663300;
 }
 
 .j11 {
-  animation-name: move11;
+  animation-name: motionArrow;
   top: 50px;
-}
-
-@keyframes move11 {
-  0% {
-    left: 0px;
-    top: 110px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 100px;
-    top: 110px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 0px;
+  --from-y: 110px;
+  --to-x: 100px;
+  --to-y: 110px;
 }
 
 .j12 {
-  animation-name: move12;
+  animation-name: motionArrow;
   top: 50px;
-  transform-origin: center;
+  --from-x: 120px;
+  --from-y: 80px;
+  --to-x: 200px;
+  --to-y: 110px;
 }
-
-@keyframes move12 {
-  0% {
-    left: 120px;
-    top: 80px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 200px;
-    top: 110px;
-    width: 50px;
-    height: 50px;
-  }
-}
-
 
 .j13 {
-  animation-name: move13;
+  animation-name: motionArrow;
   top: 50px;
-}
-
-@keyframes move13 {
-  0% {
-    left: 300px;
-    top: 60px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 300px;
-    top: 110px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 300px;
+  --from-y: 60px;
+  --to-x: 300px;
+  --to-y: 110px;
 }
 
 .j14 {
-  animation-name: move14;
+  animation-name: motionArrow;
   top: 50px;
-}
-
-@keyframes move14 {
-  0% {
-    left: 480px;
-    top: 80px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 400px;
-    top: 110px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 480px;
+  --from-y: 80px;
+  --to-x: 400px;
+  --to-y: 110px;
 }
 
 .j15 {
-  animation-name: move15;
+  animation-name: motionArrow;
   top: 50px;
+  --from-x: 600px;
+  --from-y: 110px;
+  --to-x: 500px;
+  --to-y: 110px;
 }
 
-@keyframes move15 {
-  0% {
-    left: 600px;
-    top: 110px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
+.j16 {
+  animation-name: motionArrow;
+  top: 50px;
+  --from-x: 500px;
+  --from-y: 110px;
+  --to-x: 600px;
+  --to-y: 110px;
+}
 
-  100% {
-    left: 500px;
-    top: 110px;
-    width: 50px;
-    height: 50px;
-  }
+.j17 {
+  animation-name: motionArrow;
+  top: 50px;
+  --from-x: 620px;
+  --from-y: 80px;
+  --to-x: 700px;
+  --to-y: 110px;
+}
+
+.j18 {
+  animation-name: motionArrow;
+  top: 50px;
+  --from-x: 800px;
+  --from-y: 60px;
+  --to-x: 800px;
+  --to-y: 110px;
+}
+
+.j19 {
+  animation-name: motionArrow;
+  top: 50px;
+  --from-x: 980px;
+  --from-y: 80px;
+  --to-x: 900px;
+  --to-y: 110px;
+}
+
+.j1a {
+  animation-name: motionArrow;
+  top: 50px;
+  --from-x: 1100px;
+  --from-y: 110px;
+  --to-x: 1000px;
+  --to-y: 110px;
 }
 
 .j21 {
-  animation-name: move21;
+  animation-name: motionArrow;
   top: 150px;
-}
-
-@keyframes move21 {
-  0% {
-    left: 50px;
-    top: 170px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 150px;
-    top: 170px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 50px;
+  --from-y: 170px;
+  --to-x: 150px;
+  --to-y: 170px;
 }
 
 .j22 {
-  animation-name: move22;
+  animation-name: motionArrow;
   top: 150px;
+  --from-x: 170px;
+  --from-y: 140px;
+  --to-x: 250px;
+  --to-y: 170px;
 }
-
-@keyframes move22 {
-  0% {
-    left: 170px;
-    top: 140px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 250px;
-    top: 170px;
-    width: 50px;
-    height: 50px;
-  }
-}
-
 
 .j23 {
-  animation-name: move23;
+  animation-name: motionArrow;
   top: 150px;
-}
-
-@keyframes move23 {
-  0% {
-    left: 430px;
-    top: 140px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 350px;
-    top: 170px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 430px;
+  --from-y: 140px;
+  --to-x: 350px;
+  --to-y: 170px;
 }
 
 .j24 {
-  animation-name: move24;
+  animation-name: motionArrow;
   top: 150px;
+  --from-x: 550px;
+  --from-y: 170px;
+  --to-x: 450px;
+  --to-y: 170px;
 }
 
-@keyframes move24 {
-  0% {
-    left: 550px;
-    top: 170px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
+.j26 {
+  animation-name: motionArrow;
+  top: 150px;
+  --from-x: 550px;
+  --from-y: 170px;
+  --to-x: 650px;
+  --to-y: 170px;
+}
 
-  100% {
-    left: 450px;
-    top: 170px;
-    width: 50px;
-    height: 50px;
-  }
+.j27 {
+  animation-name: motionArrow;
+  top: 150px;
+  --from-x: 670px;
+  --from-y: 140px;
+  --to-x: 750px;
+  --to-y: 170px;
+}
+
+.j28 {
+  animation-name: motionArrow;
+  top: 150px;
+  --from-x: 930px;
+  --from-y: 140px;
+  --to-x: 850px;
+  --to-y: 170px;
+}
+
+.j29 {
+  animation-name: motionArrow;
+  top: 150px;
+  --from-x: 1050px;
+  --from-y: 170px;
+  --to-x: 950px;
+  --to-y: 170px;
 }
 
 .j31 {
-  animation-name: move31;
+  animation-name: motionArrow;
   top: 250px;
-}
-
-@keyframes move31 {
-  0% {
-    left: 50px;
-    top: 230px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 150px;
-    top: 230px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 50px;
+  --from-y: 230px;
+  --to-x: 150px;
+  --to-y: 230px;
 }
 
 .j32 {
-  animation-name: move32;
+  animation-name: motionArrow;
   top: 250px;
+  --from-x: 170px;
+  --from-y: 260px;
+  --to-x: 250px;
+  --to-y: 230px;
 }
-
-@keyframes move32 {
-  0% {
-    left: 170px;
-    top: 260px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 250px;
-    top: 230px;
-    width: 50px;
-    height: 50px;
-  }
-}
-
 
 .j33 {
-  animation-name: move33;
+  animation-name: motionArrow;
   top: 250px;
-}
-
-@keyframes move33 {
-  0% {
-    left: 430px;
-    top: 260px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 350px;
-    top: 230px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 430px;
+  --from-y: 260px;
+  --to-x: 350px;
+  --to-y: 230px;
 }
 
 .j34 {
-  animation-name: move34;
+  animation-name: motionArrow;
   top: 250px;
+  --from-x: 550px;
+  --from-y: 230px;
+  --to-x: 450px;
+  --to-y: 230px;
 }
 
-@keyframes move34 {
-  0% {
-    left: 550px;
-    top: 230px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
+.j36 {
+  animation-name: motionArrow;
+  top: 250px;
+  --from-x: 550px;
+  --from-y: 230px;
+  --to-x: 650px;
+  --to-y: 230px;
+}
 
-  100% {
-    left: 450px;
-    top: 230px;
-    width: 50px;
-    height: 50px;
-  }
+.j37 {
+  animation-name: motionArrow;
+  top: 250px;
+  --from-x: 670px;
+  --from-y: 260px;
+  --to-x: 750px;
+  --to-y: 230px;
+}
+
+.j38 {
+  animation-name: motionArrow;
+  top: 250px;
+  --from-x: 930px;
+  --from-y: 260px;
+  --to-x: 850px;
+  --to-y: 230px;
+}
+
+.j39 {
+  animation-name: motionArrow;
+  top: 250px;
+  --from-x: 1050px;
+  --from-y: 230px;
+  --to-x: 950px;
+  --to-y: 230px;
 }
 
 .j41 {
-  animation-name: move41;
+  animation-name: motionArrow;
   top: 350px;
-}
-
-@keyframes move41 {
-  0% {
-    left: 0px;
-    top: 290px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 100px;
-    top: 290px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 0px;
+  --from-y: 290px;
+  --to-x: 100px;
+  --to-y: 290px;
 }
 
 .j42 {
-  animation-name: move42;
+  animation-name: motionArrow;
   top: 350px;
+  --from-x: 120px;
+  --from-y: 340px;
+  --to-x: 200px;
+  --to-y: 290px;
 }
-
-@keyframes move42 {
-  0% {
-    left: 120px;
-    top: 340px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 200px;
-    top: 290px;
-    width: 50px;
-    height: 50px;
-  }
-}
-
 
 .j43 {
-  animation-name: move43;
+  animation-name: motionArrow;
   top: 350px;
-}
-
-@keyframes move43 {
-  0% {
-    left: 300px;
-    top: 390px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 300px;
-    top: 290px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 300px;
+  --from-y: 390px;
+  --to-x: 300px;
+  --to-y: 290px;
 }
 
 .j44 {
-  animation-name: move44;
+  animation-name: motionArrow;
   top: 350px;
-}
-
-@keyframes move44 {
-  0% {
-    left: 480px;
-    top: 340px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 400px;
-    top: 290px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 480px;
+  --from-y: 340px;
+  --to-x: 400px;
+  --to-y: 290px;
 }
 
 .j45 {
-  animation-name: move45;
+  animation-name: motionArrow;
   top: 350px;
+  --from-x: 600px;
+  --from-y: 290px;
+  --to-x: 500px;
+  --to-y: 290px;
 }
 
-@keyframes move45 {
-  0% {
-    left: 600px;
-    top: 290px;
-    width: 50px;
-    height: 0px;
-    background: #ffffff;
-  }
-
-  100% {
-    left: 500px;
-    top: 290px;
-    width: 50px;
-    height: 50px;
-  }
+.j46 {
+  animation-name: motionArrow;
+  top: 350px;
+  --from-x: 500px;
+  --from-y: 290px;
+  --to-x: 600px;
+  --to-y: 290px;
 }
 
-.j11_org, .j12_org, .j13_org, .j14_org, .j15_org, .j21_org, .j22_org, .j23_org, .j24_org, .j31_org, .j32_org, .j33_org, .j34_org, .j41_org, .j42_org, .j43_org, .j44_org, .j45_org {
+.j47 {
+  animation-name: motionArrow;
+  top: 350px;
+  --from-x: 620px;
+  --from-y: 340px;
+  --to-x: 700px;
+  --to-y: 290px;
+}
+
+.j48 {
+  animation-name: motionArrow;
+  top: 350px;
+  --from-x: 800px;
+  --from-y: 390px;
+  --to-x: 800px;
+  --to-y: 290px;
+}
+
+.j49 {
+  animation-name: motionArrow;
+  top: 350px;
+  --from-x: 980px;
+  --from-y: 340px;
+  --to-x: 900px;
+  --to-y: 290px;
+}
+
+.j4a {
+  animation-name: motionArrow;
+  top: 350px;
+  --from-x: 1100px;
+  --from-y: 290px;
+  --to-x: 1000px;
+  --to-y: 290px;
+}
+
+.j11_org,
+.j12_org,
+.j13_org,
+.j14_org,
+.j15_org,
+.j21_org,
+.j22_org,
+.j23_org,
+.j24_org,
+.j31_org,
+.j32_org,
+.j33_org,
+.j34_org,
+.j41_org,
+.j42_org,
+.j43_org,
+.j44_org,
+.j45_org,
+.j16_org,
+.j17_org,
+.j18_org,
+.j19_org,
+.j1a_org,
+.j26_org,
+.j27_org,
+.j28_org,
+.j29_org,
+.j36_org,
+.j37_org,
+.j38_org,
+.j39_org,
+.j46_org,
+.j47_org,
+.j48_org,
+.j49_org,
+.j4a_org {
   animation-timing-function: linear, step-end;
   animation-fill-mode: forwards;
 }
 
-.j11_org, .j21_org, .j31_org, .j41_org {
+.j11_org,
+.j21_org,
+.j31_org,
+.j41_org,
+.j16_org,
+.j26_org,
+.j36_org,
+.j46_org {
   border: 2px solid #6666ff;
   background: #000066;
 }
 
-.j12_org, .j22_org, .j32_org, .j42_org {
+.j12_org,
+.j22_org,
+.j32_org,
+.j42_org,
+.j17_org,
+.j27_org,
+.j37_org,
+.j47_org {
   border: 2px solid #66ffff;
   background: #003333;
 }
 
-.j13_org, .j43_org {
+.j13_org,
+.j43_org,
+.j18_org,
+.j48_org {
   border: 2px solid #ffffff;
   background: #333333;
 }
 
-.j14_org, .j23_org, .j33_org, .j44_org {
+.j14_org,
+.j23_org,
+.j33_org,
+.j44_org,
+.j19_org,
+.j28_org,
+.j38_org,
+.j49_org {
   border: 2px solid #ffff66;
   background: #333300;
 }
 
-.j15_org, .j24_org, .j34_org, .j45_org {
+.j15_org,
+.j24_org,
+.j34_org,
+.j45_org,
+.j1a_org,
+.j29_org,
+.j39_org,
+.j4a_org {
   border: 2px solid #ff9966;
   background: #663300;
 }
 
 .j11_org {
-  animation-name: move11_org;
+  animation-name: motionArrowOrg;
   top: 50px;
-}
-
-@keyframes move11_org {
-  0% {
-    left: 50px;
-    top: 110px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 100px;
-    top: 110px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 50px;
+  --from-y: 110px;
+  --to-x: 100px;
+  --to-y: 110px;
 }
 
 .j12_org {
-  animation-name: move12_org;
+  animation-name: motionArrowOrg;
   top: 50px;
-  transform-origin: center;
+  --from-x: 150px;
+  --from-y: 110px;
+  --to-x: 200px;
+  --to-y: 110px;
 }
-
-@keyframes move12_org {
-  0% {
-    left: 150px;
-    top: 110px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 200px;
-    top: 110px;
-    width: 50px;
-    height: 50px;
-  }
-}
-
 
 .j13_org {
-  animation-name: move13_org;
+  animation-name: motionArrowOrg;
   top: 50px;
-}
-
-@keyframes move13_org {
-  0% {
-    left: 300px;
-    top: 60px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 300px;
-    top: 110px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 300px;
+  --from-y: 60px;
+  --to-x: 300px;
+  --to-y: 110px;
 }
 
 .j14_org {
-  animation-name: move14_org;
+  animation-name: motionArrowOrg;
   top: 50px;
-}
-
-@keyframes move14_org {
-  0% {
-    left: 450px;
-    top: 110px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 400px;
-    top: 110px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 450px;
+  --from-y: 110px;
+  --to-x: 400px;
+  --to-y: 110px;
 }
 
 .j15_org {
-  animation-name: move15_org;
+  animation-name: motionArrowOrg;
   top: 50px;
+  --from-x: 550px;
+  --from-y: 110px;
+  --to-x: 500px;
+  --to-y: 110px;
 }
 
-@keyframes move15_org {
-  0% {
-    left: 550px;
-    top: 110px;
-    width: 50px;
-    height: 0px;
-  }
+.j16_org {
+  animation-name: motionArrowOrg;
+  top: 50px;
+  --from-x: 550px;
+  --from-y: 110px;
+  --to-x: 600px;
+  --to-y: 110px;
+}
 
-  100% {
-    left: 500px;
-    top: 110px;
-    width: 50px;
-    height: 50px;
-  }
+.j17_org {
+  animation-name: motionArrowOrg;
+  top: 50px;
+  --from-x: 650px;
+  --from-y: 110px;
+  --to-x: 700px;
+  --to-y: 110px;
+}
+
+.j18_org {
+  animation-name: motionArrowOrg;
+  top: 50px;
+  --from-x: 800px;
+  --from-y: 60px;
+  --to-x: 800px;
+  --to-y: 110px;
+}
+
+.j19_org {
+  animation-name: motionArrowOrg;
+  top: 50px;
+  --from-x: 950px;
+  --from-y: 110px;
+  --to-x: 900px;
+  --to-y: 110px;
+}
+
+.j1a_org {
+  animation-name: motionArrowOrg;
+  top: 50px;
+  --from-x: 1050px;
+  --from-y: 110px;
+  --to-x: 1000px;
+  --to-y: 110px;
 }
 
 .j21_org {
-  animation-name: move21_org;
+  animation-name: motionArrowOrg;
   top: 150px;
-}
-
-@keyframes move21_org {
-  0% {
-    left: 100px;
-    top: 170px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 150px;
-    top: 170px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 100px;
+  --from-y: 170px;
+  --to-x: 150px;
+  --to-y: 170px;
 }
 
 .j22_org {
-  animation-name: move22_org;
+  animation-name: motionArrowOrg;
   top: 150px;
+  --from-x: 200px;
+  --from-y: 170px;
+  --to-x: 250px;
+  --to-y: 170px;
 }
-
-@keyframes move22_org {
-  0% {
-    left: 200px;
-    top: 170px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 250px;
-    top: 170px;
-    width: 50px;
-    height: 50px;
-  }
-}
-
 
 .j23_org {
-  animation-name: move23_org;
+  animation-name: motionArrowOrg;
   top: 150px;
-}
-
-@keyframes move23_org {
-  0% {
-    left: 400px;
-    top: 170px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 350px;
-    top: 170px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 400px;
+  --from-y: 170px;
+  --to-x: 350px;
+  --to-y: 170px;
 }
 
 .j24_org {
-  animation-name: move24_org;
+  animation-name: motionArrowOrg;
   top: 150px;
+  --from-x: 500px;
+  --from-y: 170px;
+  --to-x: 450px;
+  --to-y: 170px;
 }
 
-@keyframes move24_org {
-  0% {
-    left: 500px;
-    top: 170px;
-    width: 50px;
-    height: 0px;
-  }
+.j26_org {
+  animation-name: motionArrowOrg;
+  top: 150px;
+  --from-x: 600px;
+  --from-y: 170px;
+  --to-x: 650px;
+  --to-y: 170px;
+}
 
-  100% {
-    left: 450px;
-    top: 170px;
-    width: 50px;
-    height: 50px;
-  }
+.j27_org {
+  animation-name: motionArrowOrg;
+  top: 150px;
+  --from-x: 700px;
+  --from-y: 170px;
+  --to-x: 750px;
+  --to-y: 170px;
+}
+
+.j28_org {
+  animation-name: motionArrowOrg;
+  top: 150px;
+  --from-x: 900px;
+  --from-y: 170px;
+  --to-x: 850px;
+  --to-y: 170px;
+}
+
+.j29_org {
+  animation-name: motionArrowOrg;
+  top: 150px;
+  --from-x: 1000px;
+  --from-y: 170px;
+  --to-x: 950px;
+  --to-y: 170px;
 }
 
 .j31_org {
-  animation-name: move31_org;
+  animation-name: motionArrowOrg;
   top: 250px;
-}
-
-@keyframes move31_org {
-  0% {
-    left: 100px;
-    top: 230px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 150px;
-    top: 230px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 100px;
+  --from-y: 230px;
+  --to-x: 150px;
+  --to-y: 230px;
 }
 
 .j32_org {
-  animation-name: move32_org;
+  animation-name: motionArrowOrg;
   top: 250px;
+  --from-x: 200px;
+  --from-y: 230px;
+  --to-x: 250px;
+  --to-y: 230px;
 }
-
-@keyframes move32_org {
-  0% {
-    left: 200px;
-    top: 230px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 250px;
-    top: 230px;
-    width: 50px;
-    height: 50px;
-  }
-}
-
 
 .j33_org {
-  animation-name: move33_org;
+  animation-name: motionArrowOrg;
   top: 250px;
-}
-
-@keyframes move33_org {
-  0% {
-    left: 400px;
-    top: 230px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 350px;
-    top: 230px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 400px;
+  --from-y: 230px;
+  --to-x: 350px;
+  --to-y: 230px;
 }
 
 .j34_org {
-  animation-name: move34_org;
+  animation-name: motionArrowOrg;
   top: 250px;
+  --from-x: 500px;
+  --from-y: 230px;
+  --to-x: 450px;
+  --to-y: 230px;
 }
 
-@keyframes move34_org {
-  0% {
-    left: 500px;
-    top: 230px;
-    width: 50px;
-    height: 0px;
-  }
+.j36_org {
+  animation-name: motionArrowOrg;
+  top: 250px;
+  --from-x: 600px;
+  --from-y: 230px;
+  --to-x: 650px;
+  --to-y: 230px;
+}
 
-  100% {
-    left: 450px;
-    top: 230px;
-    width: 50px;
-    height: 50px;
-  }
+.j37_org {
+  animation-name: motionArrowOrg;
+  top: 250px;
+  --from-x: 700px;
+  --from-y: 230px;
+  --to-x: 750px;
+  --to-y: 230px;
+}
+
+.j38_org {
+  animation-name: motionArrowOrg;
+  top: 250px;
+  --from-x: 900px;
+  --from-y: 230px;
+  --to-x: 850px;
+  --to-y: 230px;
+}
+
+.j39_org {
+  animation-name: motionArrowOrg;
+  top: 250px;
+  --from-x: 1000px;
+  --from-y: 230px;
+  --to-x: 950px;
+  --to-y: 230px;
 }
 
 .j41_org {
-  animation-name: move41_org;
+  animation-name: motionArrowOrg;
   top: 350px;
-}
-
-@keyframes move41_org {
-  0% {
-    left: 50px;
-    top: 290px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 100px;
-    top: 290px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 50px;
+  --from-y: 290px;
+  --to-x: 100px;
+  --to-y: 290px;
 }
 
 .j42_org {
-  animation-name: move42_org;
+  animation-name: motionArrowOrg;
   top: 350px;
+  --from-x: 150px;
+  --from-y: 290px;
+  --to-x: 200px;
+  --to-y: 290px;
 }
-
-@keyframes move42_org {
-  0% {
-    left: 150px;
-    top: 290px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 200px;
-    top: 290px;
-    width: 50px;
-    height: 50px;
-  }
-}
-
 
 .j43_org {
-  animation-name: move43_org;
+  animation-name: motionArrowOrg;
   top: 350px;
-}
-
-@keyframes move43_org {
-  0% {
-    left: 300px;
-    top: 340px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 300px;
-    top: 290px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 300px;
+  --from-y: 340px;
+  --to-x: 300px;
+  --to-y: 290px;
 }
 
 .j44_org {
-  animation-name: move44_org;
+  animation-name: motionArrowOrg;
   top: 350px;
-}
-
-@keyframes move44_org {
-  0% {
-    left: 450px;
-    top: 290px;
-    width: 50px;
-    height: 0px;
-  }
-
-  100% {
-    left: 400px;
-    top: 290px;
-    width: 50px;
-    height: 50px;
-  }
+  --from-x: 450px;
+  --from-y: 290px;
+  --to-x: 400px;
+  --to-y: 290px;
 }
 
 .j45_org {
-  animation-name: move45_org;
+  animation-name: motionArrowOrg;
   top: 350px;
+  --from-x: 550px;
+  --from-y: 290px;
+  --to-x: 500px;
+  --to-y: 290px;
 }
 
-@keyframes move45_org {
-  0% {
-    left: 550px;
-    top: 290px;
-    width: 50px;
-    height: 0px;
-  }
+.j46_org {
+  animation-name: motionArrowOrg;
+  top: 350px;
+  --from-x: 550px;
+  --from-y: 290px;
+  --to-x: 600px;
+  --to-y: 290px;
+}
 
-  100% {
-    left: 500px;
-    top: 290px;
-    width: 50px;
-    height: 50px;
-  }
+.j47_org {
+  animation-name: motionArrowOrg;
+  top: 350px;
+  --from-x: 650px;
+  --from-y: 290px;
+  --to-x: 700px;
+  --to-y: 290px;
+}
+
+.j48_org {
+  animation-name: motionArrowOrg;
+  top: 350px;
+  --from-x: 800px;
+  --from-y: 340px;
+  --to-x: 800px;
+  --to-y: 290px;
+}
+
+.j49_org {
+  animation-name: motionArrowOrg;
+  top: 350px;
+  --from-x: 950px;
+  --from-y: 290px;
+  --to-x: 900px;
+  --to-y: 290px;
+}
+
+.j4a_org {
+  animation-name: motionArrowOrg;
+  top: 350px;
+  --from-x: 1050px;
+  --from-y: 290px;
+  --to-x: 1000px;
+  --to-y: 290px;
 }
