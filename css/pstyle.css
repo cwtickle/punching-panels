@@ -15,7 +15,7 @@ div[id^="stepHit"] {
 
 @keyframes motionArrow {
   0% {
-    left: var(--from-x);
+    left: calc(var(--from-x) + var(--panel-offset-x, 0px));
     top: var(--from-y);
     width: 50px;
     height: 0px;
@@ -23,7 +23,7 @@ div[id^="stepHit"] {
   }
 
   100% {
-    left: var(--to-x);
+    left: calc(var(--to-x) + var(--panel-offset-x, 0px));
     top: var(--to-y);
     width: 50px;
     height: 50px;

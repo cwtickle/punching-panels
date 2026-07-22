@@ -180,6 +180,19 @@ g_customJsObj.preTitle.push(() => {
 				g_headerObj.imgType = panelsImgTypeArr;
 				g_keycons.imgTypes = panelsImgTypeNames;
 
+				const panelDesignWidth = g_keyObj[`minWidth${g_keyObj.currentKey}`];
+				const panelOffsetX = (g_sWidth - panelDesignWidth) / 2;
+				document.documentElement.style.setProperty(`--panel-offset-x`, `${panelOffsetX}px`);
+
+				// パンパネクレジット
+				if (!g_headerObj.keyLists.every(isPanelKey)) {
+					multiAppend(divRoot,
+						createCss2Button(`lnkCreditP`, `Punching◇Panels ${g_PanpaneVersion}`, _ => openLink(`https://github.com/cwtickle/punching-panels`), {
+							x: g_btnX(), y: 30, w: g_btnWidth(1 / 4), h: 20, siz: 12,
+						}, g_cssObj.button_Setting),
+					);
+				}
+
 				if (g_imgType !== `panels`) {
 					g_imgType = `panels`;
 					g_stateObj.rotateEnabled = panelsImgTypeArr[0].rotateEnabled;
@@ -213,6 +226,8 @@ g_customJsObj.preTitle.push(() => {
 				g_headerObj.imgType = origImgTypeArr;
 				g_keycons.imgTypes = origImgTypeNames;
 
+				document.documentElement.style.setProperty(`--panel-offset-x`, `0px`);
+
 				if (g_imgType !== origImgTypeNames[0]) {
 					g_imgType = origImgTypeNames[0];
 					g_stateObj.rotateEnabled = origImgTypeArr[0].rotateEnabled;
@@ -241,6 +256,7 @@ g_customJsObj.preTitle.push(() => {
 				lblReverse.innerText = origLblReverse;
 				btnReverse.innerText = `${origLblReverse}:${getStgDetailName(g_stateObj.reverse)}`;
 				lblReverse.title = origMsgReverse;
+				deleteDiv(divRoot, `lnkCreditP`);
 			}
 		});
 
@@ -276,9 +292,10 @@ g_customJsObj.preTitle.push(() => {
 		// ステップゾーンの位置変更 (ノーツはCSS側で制御)
 		g_customJsObj.main.push(() => {
 			if ([`18p`, `36p`].includes(g_keyObj.currentKey)) {
+				const panelOffsetX = (g_sWidth - g_keyObj[`minWidth${g_keyObj.currentKey}`]) / 2;
 				for (let i = 0; i < g_keyObj[`keyCtrl${g_keyObj.currentKey}_0`].length; i++) {
 					if (document.getElementById(`stepRoot${i}`)) {
-						document.getElementById(`stepRoot${i}`).style.left = `${pstyleX[g_keyObj.currentKey][i]}px`;
+						document.getElementById(`stepRoot${i}`).style.left = `${pstyleX[g_keyObj.currentKey][i] + panelOffsetX}px`;
 						document.getElementById(`stepRoot${i}`).style.top = `${pstyleY[g_keyObj.currentKey][i]}px`;
 					}
 				}
