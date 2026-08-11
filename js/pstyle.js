@@ -123,11 +123,11 @@ g_customJsObj.preTitle.push(() => {
 
 		// 標準側の元の値を退避
 		const origArrowEffectUseOrg = g_headerObj.arrowEffectUseOrg;
-		const origDArrowEffect = g_stateObj.d_arroweffect;
 		const origStepAreaUse = g_headerObj.stepAreaUse;
 		const origEffectUse = g_headerObj.effectUse;
 		const origCamoufrageUse = g_headerObj.camoufrageUse;
 		const origSwappingUse = g_headerObj.swappingUse;
+		let savedStepArea, savedEffect, savedCamoufrage, savedSwapping, savedDArrowEffect;
 		const origArrowJdgY = g_diffObj.arrowJdgY;
 
 		// ラベル文言も標準側を退避
@@ -160,6 +160,13 @@ g_customJsObj.preTitle.push(() => {
 		// 現在選択中のkeyLabelに応じて都度切り替える
 		g_customJsObj.difficulty.push(() => {
 			if (!isPanelKey(g_keyObj.prevKey) && isPanelKey(g_keyObj.currentKey)) {
+
+				// panelsに入る直前の実際の値を退避
+				savedStepArea = g_stateObj.stepArea;
+				savedEffect = g_stateObj.effect;
+				savedCamoufrage = g_stateObj.camoufrage;
+				savedSwapping = g_stateObj.swapping;
+				savedDArrowEffect = g_stateObj.d_arroweffect;
 
 				// パンパネで起動しない設定を無効化
 				g_headerObj.arrowEffectUse = false;
@@ -251,11 +258,15 @@ g_customJsObj.preTitle.push(() => {
 				lblReverse.title = origMsgReverse;
 
 				g_headerObj.arrowEffectUse = origArrowEffectUseOrg;
-				g_stateObj.d_arroweffect = origDArrowEffect;
 				g_headerObj.stepAreaUse = origStepAreaUse;
 				g_headerObj.effectUse = origEffectUse;
 				g_headerObj.camoufrageUse = origCamoufrageUse;
 				g_headerObj.swappingUse = origSwappingUse;
+				g_stateObj.stepArea = savedStepArea;
+				g_stateObj.effect = savedEffect;
+				g_stateObj.camoufrage = savedCamoufrage;
+				g_stateObj.swapping = savedSwapping;
+				g_stateObj.d_arroweffect = savedDArrowEffect;
 				deleteDiv(divRoot, `lnkCreditP`);
 			}
 
