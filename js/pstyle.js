@@ -22,6 +22,10 @@ g_customJsObj.preTitle.push(() => {
 	const isDynamicKey = key => [`18p`, `36p`, `9t`, `18t`].includes(key);
 	const isStandardKey = key => !isPanelKey(key) && !isKirizmaKey(key) && !isSpecialKey(key);
 
+	// 入場検知及び離脱検知
+	const detectNewType = func => !func(g_keyObj.prevKey) && func(g_keyObj.currentKey);
+	const detectLeaveType = func => func(g_keyObj.prevKey) && !func(g_keyObj.currentKey);
+
 	if (g_headerObj.keyLists.some(isPanelKey)) {
 
 		// 位置の設定、ゲーム名の変更
@@ -159,7 +163,7 @@ g_customJsObj.preTitle.push(() => {
 
 		// 現在選択中のkeyLabelに応じて都度切り替える
 		g_customJsObj.difficulty.push(() => {
-			if (!isPanelKey(g_keyObj.prevKey) && isPanelKey(g_keyObj.currentKey)) {
+			if (detectNewType(isPanelKey)) {
 
 				// panelsに入る直前の実際の値を退避
 				savedStepArea = g_stateObj.stepArea;
@@ -215,7 +219,7 @@ g_customJsObj.preTitle.push(() => {
 						updateImgType(panelsImgTypeArr[0]);
 					}
 				}
-			} else if (isPanelKey(g_keyObj.prevKey) && isStandardKey(g_keyObj.currentKey)) {
+			} else if (detectNewType(isStandardKey)) {
 
 				g_diffObj.arrowJdgY = origArrowJdgY;
 
@@ -249,7 +253,7 @@ g_customJsObj.preTitle.push(() => {
 
 			// Reverseラベルはpstyle専有のフィールドなので、panelsを離れたら
 			// 遷移先(標準/kirizma問わず)に関係なく必ず復元する
-			if (isDynamicKey(g_keyObj.prevKey) && !isDynamicKey(g_keyObj.currentKey)) {
+			if (detectLeaveType(isDynamicKey)) {
 				g_lblNameObj.Reverse = origLblReverse;
 				g_lblNameObj[`u_Reverse`] = origLblUReverse;
 				g_msgObj.reverse = origMsgReverse;
