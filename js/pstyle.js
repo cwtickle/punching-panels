@@ -14,17 +14,8 @@ const g_PanpaneVersion = `Ver 2.0.2`;
 
 g_customJsObj.preTitle.push(() => {
 
-	// 他系統(Kirizma等)と共存できるよう、「panel系以外」ではなく「本当に標準に戻った」場合だけ復元する
 	const isPanelKey = key => [`18p`, `36p`].includes(key);
 	const isKirizmaKey = key => key.endsWith(`k`);
-	const isSpecialKey = key =>
-		(hasVal(g_rootObj.specialKey) ? g_rootObj.specialKey.split(`,`) : []).concat([`9t`, `18t`]).includes(key);
-	const isDynamicKey = key => [`18p`, `36p`, `9t`, `18t`].includes(key);
-	const isStandardKey = key => !isPanelKey(key) && !isKirizmaKey(key) && !isSpecialKey(key);
-
-	// 入場検知及び離脱検知
-	const detectNewType = func => !func(g_keyObj.prevKey) && func(g_keyObj.currentKey);
-	const detectLeaveType = func => func(g_keyObj.prevKey) && !func(g_keyObj.currentKey);
 
 	if (g_headerObj.keyLists.some(isPanelKey)) {
 
@@ -125,31 +116,17 @@ g_customJsObj.preTitle.push(() => {
 			g_lblNameObj.onigiri = `PANELS`;
 		}
 
-		// 標準側の元の値を退避
-		const origArrowEffectUseOrg = g_headerObj.arrowEffectUseOrg;
-		const origStepAreaUse = g_headerObj.stepAreaUse;
-		const origEffectUse = g_headerObj.effectUse;
-		const origCamoufrageUse = g_headerObj.camoufrageUse;
-		const origSwappingUse = g_headerObj.swappingUse;
-		let savedStepArea, savedEffect, savedCamoufrage, savedSwapping, savedDArrowEffect;
-		const origArrowJdgY = g_diffObj.arrowJdgY;
-
-		// ラベル文言も標準側を退避
+		// ラベル文言（Reverse）は標準側の値を退避しておく
 		const origLblReverse = g_lblNameObj.Reverse;
 		const origLblUReverse = g_lblNameObj[`u_Reverse`];
 		const origMsgReverse = g_msgObj.reverse;
 
 		const panelReverseMsg = { Ja: `パネルの移動パターンを変更します。`, En: `Change the panel movement pattern.` };
 
-		// 標準側は core が既に解析した内容をそのまま退避
-		const origImgTypeArr = g_headerObj.imgType;
-		const origImgTypeNames = g_keycons.imgTypes;
-
 		// panels専用の画像セットは core の解析ルートを一切通さず、ここだけで完結させる
 		const panelsImgTypeArr = [{
 			name: `panels`, extension: `svg`, rotateEnabled: true, flatStepHeight: 0, remoteDir: ``,
 		}];
-		const panelsImgTypeNames = [`panels`];
 
 		// file://実行時はupdateImgType()自体が無効化されているため、
 		// C_IMG_AASD / C_IMG_C だけ手動で差し替える（./js/lib/danoni_localbinary.js は標準版のまま使う）
@@ -161,27 +138,31 @@ g_customJsObj.preTitle.push(() => {
 
 		const orgHashTag = g_headerObj.hashTag;
 
-		// 現在選択中のkeyLabelに応じて都度切り替える
-		g_customJsObj.difficulty.push(() => {
-			if (detectNewType(isPanelKey)) {
+		// CSSカスタムプロパティを本体のフィールド管理に乗せるためのヘルパー
+		// (未所有時はbaselineがundefinedになるため、removeProperty側にフォールバックする)
+		const setOffsetProp = value => value === undefined
+			? document.documentElement.style.removeProperty(`--panel-offset-x`)
+			: document.documentElement.style.setProperty(`--panel-offset-x`, value);
 
-				// panelsに入る直前の実際の値を退避
-				savedStepArea = g_stateObj.stepArea;
-				savedEffect = g_stateObj.effect;
-				savedCamoufrage = g_stateObj.camoufrage;
-				savedSwapping = g_stateObj.swapping;
-				savedDArrowEffect = g_stateObj.d_arroweffect;
-
-				// パンパネで起動しない設定を無効化
-				g_headerObj.arrowEffectUse = false;
-				g_stateObj.d_arroweffect = C_FLG_ON;
-				g_headerObj.stepAreaUse = false;
-				g_headerObj.effectUse = false;
-				g_headerObj.camoufrageUse = false;
-				g_headerObj.swappingUse = false;
-
-				g_diffObj.arrowJdgY = -160;
-
+		// 現在選択中のkeyLabelに応じて、機能可否・画像セット・再センタリング等を本体側で自動切替する
+		registerKeyFamily(`panel`, isPanelKey, {
+			'g_headerObj.arrowEffectUse': false,
+			'g_stateObj.d_arroweffect': C_FLG_ON,
+			'g_headerObj.stepAreaUse': false,
+			'g_headerObj.effectUse': false,
+			'g_headerObj.camoufrageUse': false,
+			'g_headerObj.swappingUse': false,
+			'g_stateObj.stepArea': `Default`,
+			'g_stateObj.effect': C_FLG_OFF,
+			'g_stateObj.camoufrage': C_FLG_OFF,
+			'g_stateObj.swapping': C_FLG_OFF,
+			'g_diffObj.arrowJdgY': -160,
+			'--panel-offset-x': () => g_stateObj.playWindow.endsWith(`SideScroll`)
+				? `0px`
+				: `${(g_sWidth - g_keyObj[`minWidth${g_keyObj.currentKey}`]) / 2}px`,
+			'g_headerObj.imgType': panelsImgTypeArr,
+		}, {
+			onAcquire: () => {
 				// ラベル文言をpanel用に切替
 				g_lblNameObj.Reverse = `Dynamic`;
 				g_lblNameObj[`u_Reverse`] = `Dynamic`;
@@ -189,9 +170,6 @@ g_customJsObj.preTitle.push(() => {
 				lblReverse.innerText = `Dynamic`;
 				btnReverse.innerText = `Dynamic:${getStgDetailName(g_stateObj.reverse)}`;
 				lblReverse.title = g_msgObj.reverse;
-
-				g_headerObj.imgType = panelsImgTypeArr;
-				g_keycons.imgTypes = panelsImgTypeNames;
 
 				if (hasVal(orgHashTag)) {
 					if (!orgHashTag.includes(`#punpane`)) {
@@ -201,59 +179,17 @@ g_customJsObj.preTitle.push(() => {
 					g_headerObj.hashTag = `#punpane`;
 				}
 
-				if (g_imgType !== `panels`) {
-					g_imgType = `panels`;
-					g_stateObj.rotateEnabled = panelsImgTypeArr[0].rotateEnabled;
-					g_stateObj.flatStepHeight = panelsImgTypeArr[0].flatStepHeight;
-
-					if (g_isFile) {
-						// file://実行時: 差分のある2画像だけ手動で切替
-						C_IMG_AASD = panelLocalImg.C_IMG_AASD;
-						C_IMG_C = panelLocalImg.C_IMG_C;
-						g_imgObj.cShadow = C_IMG_AASD;
-						g_imgObj.c = C_IMG_C;
-						g_imgObj.cStep = C_IMG_C;
-						g_imgObj.cShadowStep = C_IMG_AASD;
-						g_imgObj.cStepHit = C_IMG_C;
-					} else {
-						updateImgType(panelsImgTypeArr[0]);
-					}
+				// パンパネクレジット
+				if (!g_headerObj.keyLists.every(isPanelKey) && document.getElementById(`lnkCreditP`) === null) {
+					multiAppend(divRoot,
+						createCss2Button(`lnkCreditP`, `Punching◇Panels ${g_PanpaneVersion}`, _ => openLink(`https://github.com/cwtickle/punching-panels`), {
+							x: g_btnX(), y: 30, w: g_btnWidth(1 / 4), h: 20, siz: 12,
+						}, g_cssObj.button_Setting),
+					);
 				}
-			} else if (detectNewType(isStandardKey)) {
-
-				g_diffObj.arrowJdgY = origArrowJdgY;
-
-				g_headerObj.imgType = origImgTypeArr;
-				g_keycons.imgTypes = origImgTypeNames;
-
-				if (hasVal(orgHashTag)) {
-					g_headerObj.hashTag = orgHashTag;
-				} else {
-					delete g_headerObj.hashTag;
-				}
-
-				if (g_imgType !== origImgTypeNames[0]) {
-					g_imgType = origImgTypeNames[0];
-					g_stateObj.rotateEnabled = origImgTypeArr[0].rotateEnabled;
-					g_stateObj.flatStepHeight = origImgTypeArr[0].flatStepHeight;
-
-					if (g_isFile) {
-						C_IMG_AASD = origLocalImg.C_IMG_AASD;
-						C_IMG_C = origLocalImg.C_IMG_C;
-						g_imgObj.cShadow = C_IMG_AASD;
-						g_imgObj.c = C_IMG_C;
-						g_imgObj.cStep = C_IMG_C;
-						g_imgObj.cShadowStep = C_IMG_AASD;
-						g_imgObj.cStepHit = C_IMG_C;
-					} else {
-						updateImgType(origImgTypeArr[0]);
-					}
-				}
-			}
-
-			// Reverseラベルはpstyle専有のフィールドなので、panelsを離れたら
-			// 遷移先(標準/kirizma問わず)に関係なく必ず復元する
-			if (detectLeaveType(isDynamicKey)) {
+			},
+			onRelease: () => {
+				// ラベル文言を標準に戻す
 				g_lblNameObj.Reverse = origLblReverse;
 				g_lblNameObj[`u_Reverse`] = origLblUReverse;
 				g_msgObj.reverse = origMsgReverse;
@@ -261,43 +197,43 @@ g_customJsObj.preTitle.push(() => {
 				btnReverse.innerText = `${origLblReverse}:${getStgDetailName(g_stateObj.reverse)}`;
 				lblReverse.title = origMsgReverse;
 
-				g_headerObj.arrowEffectUse = origArrowEffectUseOrg;
-				g_headerObj.stepAreaUse = origStepAreaUse;
-				g_headerObj.effectUse = origEffectUse;
-				g_headerObj.camoufrageUse = origCamoufrageUse;
-				g_headerObj.swappingUse = origSwappingUse;
-				g_stateObj.stepArea = savedStepArea;
-				g_stateObj.effect = savedEffect;
-				g_stateObj.camoufrage = savedCamoufrage;
-				g_stateObj.swapping = savedSwapping;
-				g_stateObj.d_arroweffect = savedDArrowEffect;
-				deleteDiv(divRoot, `lnkCreditP`);
-			}
-
-			// オフセットは18p<->36pの切替でも変わるため、系統の出入り判定とは無関係に、
-			// panels選択中は常に(現在のkeyLabelに応じて)再計算し続ける
-			if (isPanelKey(g_keyObj.currentKey)) {
-				if (g_stateObj.playWindow.endsWith(`SideScroll`)) {
-					document.documentElement.style.setProperty(`--panel-offset-x`, `0px`);
+				if (hasVal(orgHashTag)) {
+					g_headerObj.hashTag = orgHashTag;
 				} else {
-					const panelOffsetX = (g_sWidth - g_keyObj[`minWidth${g_keyObj.currentKey}`]) / 2;
-					document.documentElement.style.setProperty(`--panel-offset-x`, `${panelOffsetX}px`);
+					delete g_headerObj.hashTag;
 				}
 
-				// パンパネクレジット
-				if (!g_headerObj.keyLists.every(isPanelKey)) {
-					if (document.getElementById(`lnkCreditP`) === null) {
-						multiAppend(divRoot,
-							createCss2Button(`lnkCreditP`, `Punching◇Panels ${g_PanpaneVersion}`, _ => openLink(`https://github.com/cwtickle/punching-panels`), {
-								x: g_btnX(), y: 30, w: g_btnWidth(1 / 4), h: 20, siz: 12,
-							}, g_cssObj.button_Setting),
-						);
+				deleteDiv(divRoot, `lnkCreditP`);
+			},
+		}, {
+			'--panel-offset-x': setOffsetProp,
+			// imgTypeは g_headerObj.imgType の1箇所だけをエンジンに管理させ、
+			// g_keycons.imgTypes はそこから毎回導出する（core の headerConvert と同じ導出ロジック）
+			'g_headerObj.imgType': imgTypeArr => {
+				g_headerObj.imgType = imgTypeArr;
+				g_keycons.imgTypes = imgTypeArr.map(t => t.name === `` ? `Original` : t.name);
+
+				const newImgTypeName = imgTypeArr[0].name === `` ? `Original` : imgTypeArr[0].name;
+				if (g_imgType !== newImgTypeName) {
+					g_imgType = newImgTypeName;
+					g_stateObj.rotateEnabled = imgTypeArr[0].rotateEnabled;
+					g_stateObj.flatStepHeight = imgTypeArr[0].flatStepHeight;
+
+					if (g_isFile) {
+						// file://実行時: 差分のある2画像だけ手動で切替
+						const localImg = imgTypeArr === panelsImgTypeArr ? panelLocalImg : origLocalImg;
+						C_IMG_AASD = localImg.C_IMG_AASD;
+						C_IMG_C = localImg.C_IMG_C;
+						g_imgObj.cShadow = C_IMG_AASD;
+						g_imgObj.c = C_IMG_C;
+						g_imgObj.cStep = C_IMG_C;
+						g_imgObj.cShadowStep = C_IMG_AASD;
+						g_imgObj.cStepHit = C_IMG_C;
+					} else {
+						updateImgType(imgTypeArr[0]);
 					}
 				}
-			} else if (isPanelKey(g_keyObj.prevKey)) {
-				// panelsから離れた瞬間だけ0に戻す(以後は他系統なので触らない)
-				document.documentElement.style.setProperty(`--panel-offset-x`, `0px`);
-			}
+			},
 		});
 
 		/**
@@ -352,7 +288,6 @@ g_customJsObj.preTitle.push(() => {
 		});
 	}
 });
-
 /**
  * カスタムキー定義
  */
