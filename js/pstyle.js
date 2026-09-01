@@ -5,12 +5,12 @@
  * 
  * Source by tickle
  * Created: 2022/01/28
- * Revised: 2026/08/22
- * Source Version: Ver 2.0.2
+ * Revised: 2026/09/01
+ * Source Version: Ver 3.0.0
  * 
  * https://github.com/cwtickle/punching-panels
  */
-const g_PanpaneVersion = `Ver 2.0.2`;
+const g_PanpaneVersion = `Ver 3.0.0`;
 
 g_customJsObj.preTitle.push(() => {
 
